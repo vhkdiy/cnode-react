@@ -6712,6 +6712,7 @@ ol, ul {
 
 .content__topic_list {
     background-color: #fff;
+    margin-bottom: 13px;
 }
 
 .content__header {
@@ -6788,6 +6789,7 @@ ol, ul {
     font-size: 16px;
     line-height: 30px;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .topic_title:visited {
@@ -6796,6 +6798,7 @@ ol, ul {
 
 .topic_title_wrapper {
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .topic__put_top {
@@ -6803,6 +6806,15 @@ ol, ul {
     padding: 2px 4px;
     border-radius: 3px;
     color: #fff;
+    font-size: 12px;
+    margin-right: 3px;
+}
+
+.topic__list_tab {
+    background-color: #e5e5e5;
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #999;
     font-size: 12px;
     margin-right: 3px;
 }

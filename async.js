@@ -16,6 +16,8 @@ function getStarsNumber(url) {
 
 getStarsNumber('http://api.github.com/repos/lodash/lodash');
 
+fetch("https://cnodejs.org/api/v1/topics").then(x => x.json().then(json => json.data.map(s => console.log(s.title))))
+
 async function asyncGetStarsNumber(url) {
   try {
     const data = await fetch(url);

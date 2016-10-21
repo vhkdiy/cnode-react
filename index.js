@@ -1,123 +1,202 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "style.css";
-// import "normalize";
+import asyncGetData from "store";
 
 import React from "react";
 import { render } from "react-dom";
 
-function Header() {
-  return (
-    <nav className="navbar navbar-inverse">
-      <div className="container">
-        <div className="navbar-header">
-          <a href="#">
-            <img className="navbar-brand" src="http://o4j806krb.qnssl.com/public/images/cnodejs_light.svg" alt="" />
-          </a>
-        </div>
+class Header extends React.Component {
+  constructor() {
+    super();
+    this.state = { loading: true, data: {} };
+  }
 
-        <div className="collapse navbar-collapse" id="responsive-navbar">
-          <form action="" className="navbar-form navbar-left">
-            <input type="text" placeholder="search" className="form-control navbar-search" />
-          </form>
+  async componentDidMount() {
+    const result = await asyncGetData(`https://cnodejs.org/api/v1/topics`);
+    this.setState({
+      loading: false,
+      data: result
+    });
+  }
 
-          <div className="navbar-right">
-            <ul className="nav navbar-nav">
-              <li>
-                <a href="#">首页</a>
-              </li>
-              <li>
-                <a href="#">新手入门</a>
-              </li>
-              <li>
-                <a href="#">API</a>
-              </li>
-              <li>
-                <a href="#">关于</a>
-              </li>
-              <li>
-                <a href="#">注册</a>
-              </li>
-              <li>
-                <a href="#">登陆</a>
-              </li>
-            </ul>
+  render() {
+    return (
+      <nav className="navbar navbar-inverse">
+        <div className="container">
+          <div className="navbar-header">
+            <a href="#">
+              <img className="navbar-brand" src="http://o4j806krb.qnssl.com/public/images/cnodejs_light.svg" alt="" />
+            </a>
+          </div>
+
+          <div className="collapse navbar-collapse" id="responsive-navbar">
+            <form action="" className="navbar-form navbar-left">
+              <input type="text" placeholder="search" className="form-control navbar-search" />
+            </form>
+
+            <div className="navbar-right">
+              <ul className="nav navbar-nav">
+                <li>
+                  <a href="#">首页</a>
+                </li>
+                <li>
+                  <a href="#">新手入门</a>
+                </li>
+                <li>
+                  <a href="#">API</a>
+                </li>
+                <li>
+                  <a href="#">关于</a>
+                </li>
+                <li>
+                  <a href="#">注册</a>
+                </li>
+                <li>
+                  <a href="#">登陆</a>
+                </li>
+              </ul>
+            </div>
+
           </div>
 
         </div>
-
-      </div>
-    </nav>
-  );
+      </nav>
+    )
+  }
 }
 
 
-function Content() {
+function TopicListItem(props) {
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-9 content">
-          <ul className="nav nav-pills content__header">
-            <li className="active">
-              <a href="#">全部</a>
-            </li>
-            <li>
-              <a href="#">精华</a>
-            </li>
-            <li>
-              <a href="#">分享</a>
-            </li>
-            <li>
-              <a href="#">问答</a>
-            </li>
-            <li>
-              <a href="#">招聘</a>
-            </li>
-          </ul>
-          <div className="content__topic_list">
-            <div className="topic_list__cell">
-              <a href="#" className="pull-left">
-                <img className="user__img" src="http://gravatar.com/avatar/d00d8e3461257418a62b1cb7abeea85a?size=48" alt="" />
-              </a>
-              <span className="reply_count pull-left">
-                <span className="count_of_replies">4</span>
-                <span className="count_seperator">/</span>
-                <span className="count_of_visits">386</span>
-              </span>
+    <div className="topic_list__cell">
+      <a href="#" className="pull-left">
+        <img className="user__img" src={props.avatar} title={props.loginname} />
+      </a>
+      <span className="reply_count pull-left">
+        <span className="count_of_replies">{props.replycount}</span>
+        <span className="count_seperator">/</span>
+        <span className="count_of_visits">{props.visitcount}</span>
+      </span>
 
-              <a href="#" className="last_time pull-right">
-                <img className="user__small_img" src="http://gravatar.com/avatar/d24fc5b1c6b84dae95dd23ba1c7ebbcb?size=48" alt="" />
-                <span className="last_active_time">15 小时前</span>
-              </a>
+      <a href="#" className="last_time pull-right">
+        <img className="user__small_img" src="http://gravatar.com/avatar/d24fc5b1c6b84dae95dd23ba1c7ebbcb?size=48" alt="" />
+        <span className="last_active_time">{props.time}</span>
+      </a>
 
-              <div className="topic_title_wrapper">
-                <span className="topic__put_top">置顶</span>
-                <a className="topic_title" href="#">第二届 杭州 Node Party 总结</a>
-              </div>
-
-            </div>
-
-            <div>
-              <ul className="pagination">
-                <li><a href="#">&laquo;</a></li>
-                <li className="active disabled"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a>...</a></li>
-                <li><a href="#">&raquo;</a></li>
-              </ul>
-            </div> {/* 分页 */}
-
-          </div>
-        </div> {/* col-md-9 content */}
-
-        <Sidebar/>
-
+      <div className="topic_title_wrapper">
+        <span className={props.tab}>置顶</span>
+        <a className="topic_title" href="#">{props.title}</a>
       </div>
     </div>
   );
 }
+
+
+class Content extends React.Component {
+  constructor() {
+    super();
+    this.state = { loading: true, data: {} };
+  }
+
+  async componentDidMount() {
+    const result = await asyncGetData(`https://cnodejs.org/api/v1/topics`);
+    this.setState({
+      loading: false,
+      data: result,
+    });
+  }
+
+  lastReplyTime(time) {
+    let lasttime = new Date(time);
+    const between = (Date.now() - Number(lasttime))/1000;
+    if (between < 3600) {
+      return `${~~(between / 60)} 分钟前`
+    } else if (between < 86400) {
+      return `${~~(between / 3600)} 小时前`
+    } else {
+      return `${~~(between / 86400)} 天前`
+    }
+  }
+  
+
+  renderTopicListCell() {
+    if (this.state.loading) {
+      console.log('loading...');
+    } else {
+      let cellViews = this.state.data.map(data => {
+          let title = data.title;
+          let loginname = data.author.loginname;
+          let replycount = data.reply_count;
+          let visitcount = data.visit_count;
+          let avatar = data.author.avatar_url;
+          let tab = data.top ? 'topic__put_top':'topic__list_tab'
+          let time = this.lastReplyTime(data.last_reply_at);
+          let id = data.id;
+          return <TopicListItem key={id} title={title} replycount={replycount} visitcount={visitcount} avatar={avatar} time={time} loginname={loginname} tab={tab}/>
+        });
+      return cellViews;
+    }
+  }
+
+  render() {
+    if (this.state.loading) {
+      console.log('loading...')
+    } else {
+      console.log(this.state.data);
+    }
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-9 content">
+            <ul className="nav nav-pills content__header">
+              <li className="active">
+                <a href="#">全部</a>
+              </li>
+              <li>
+                <a href="#">精华</a>
+              </li>
+              <li>
+                <a href="#">分享</a>
+              </li>
+              <li>
+                <a href="#">问答</a>
+              </li>
+              <li>
+                <a href="#">招聘</a>
+              </li>
+            </ul>
+            <div className="content__topic_list">
+              {this.renderTopicListCell()}
+
+              <div>
+                <ul className="pagination">
+                  <li><a href="#">&laquo;</a></li>
+                  <li className="active disabled"><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">4</a></li>
+                  <li><a href="#">5</a></li>
+                  <li><a>...</a></li>
+                  <li><a href="#">&raquo;</a></li>
+                </ul>
+              </div> {/* 分页 */}
+
+            </div>
+          </div> {/* col-md-9 content */}
+
+          <Sidebar />
+
+        </div>
+      </div>
+    );
+  }
+}
+
+// function Content() {
+//   return (
+    
+//   );
+// }
 
 function Sidebar() {
   return (
@@ -191,7 +270,7 @@ function Sidebar() {
         </div>
       </div>
 
-    </div> {/* col-md-3 sidebar */}
+    </div>
   );
 }
 
@@ -213,9 +292,8 @@ function Footer() {
   );
 }
 
-const { Component } = React;
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div>
