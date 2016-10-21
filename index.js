@@ -67,6 +67,20 @@ class Header extends React.Component {
 
 
 function TopicListItem(props) {
+  let tab = '';
+
+  if (props.top) {
+    tab = "置顶";
+  } else if (props.good) {
+    tab = "精华";
+  } else if (props.tabString === "share") {
+    tab = "分享";
+  } else if (props.tabString === "ask") {
+    tab = "问答";
+  } else if (props.tabString === "job") {
+    tab = "招聘";
+  }
+
   return (
     <div className="topic_list__cell">
       <a href="#" className="pull-left">
@@ -84,7 +98,7 @@ function TopicListItem(props) {
       </a>
 
       <div className="topic_title_wrapper">
-        <span className={props.tab}>置顶</span>
+        <span className={props.tab}>{tab}</span>
         <a className="topic_title" href="#">{props.title}</a>
       </div>
     </div>
@@ -95,7 +109,7 @@ function TopicListItem(props) {
 class Content extends React.Component {
   constructor() {
     super();
-    this.state = { loading: true, data: {} };
+    this.state = { loading: true, data: [] };
   }
 
   async componentDidMount() {
@@ -108,7 +122,7 @@ class Content extends React.Component {
 
   lastReplyTime(time) {
     let lasttime = new Date(time);
-    const between = (Date.now() - Number(lasttime))/1000;
+    const between = (Date.now() - Number(lasttime)) / 1000;
     if (between < 3600) {
       return `${~~(between / 60)} 分钟前`
     } else if (between < 86400) {
@@ -117,23 +131,26 @@ class Content extends React.Component {
       return `${~~(between / 86400)} 天前`
     }
   }
-  
+
 
   renderTopicListCell() {
     if (this.state.loading) {
       console.log('loading...');
     } else {
       let cellViews = this.state.data.map(data => {
-          let title = data.title;
-          let loginname = data.author.loginname;
-          let replycount = data.reply_count;
-          let visitcount = data.visit_count;
-          let avatar = data.author.avatar_url;
-          let tab = data.top ? 'topic__put_top':'topic__list_tab'
-          let time = this.lastReplyTime(data.last_reply_at);
-          let id = data.id;
-          return <TopicListItem key={id} title={title} replycount={replycount} visitcount={visitcount} avatar={avatar} time={time} loginname={loginname} tab={tab}/>
-        });
+        let title = data.title;
+        let loginname = data.author.loginname;
+        let replycount = data.reply_count;
+        let visitcount = data.visit_count;
+        let avatar = data.author.avatar_url;
+        let tab = data.top || data.good ? 'topic__put_top' : 'topic__list_tab';
+        let top = data.top;
+        let tabString = data.tab;
+        let time = this.lastReplyTime(data.last_reply_at);
+        let id = data.id;
+        let good = data.good;
+        return <TopicListItem key={id} title={title} replycount={replycount} visitcount={visitcount} avatar={avatar} time={time} loginname={loginname} tab={tab} tabString={tabString} good={good} top={top}/>
+      });
       return cellViews;
     }
   }
@@ -184,7 +201,7 @@ class Content extends React.Component {
             </div>
           </div> {/* col-md-9 content */}
 
-          <Sidebar />
+          <Sidebar data={this.state.data.map(({ title, reply_count: replycount }) => ({ title, replycount }))} />
 
         </div>
       </div>
@@ -194,11 +211,11 @@ class Content extends React.Component {
 
 // function Content() {
 //   return (
-    
+
 //   );
 // }
 
-function Sidebar() {
+function Sidebar({ data }) {
   return (
     <div className="col-md-3 sidebar">
       <div className="sidebar__panel sidebar__panel__login">
@@ -211,11 +228,7 @@ function Sidebar() {
           <span className="sidebar__panel__header_span">无人回复的话题</span>
         </div>
         <div className="sidebar__panel__inner">
-          <a href="#" className="sidebar__title">怎么在server 2008上部署管理node环境node环境</a>
-          <a href="#" className="sidebar__title">怎么在server 2008上部署管理node环境node环境</a>
-          <a href="#" className="sidebar__title">怎么在server 2008上部署管理node环境node环境</a>
-          <a href="#" className="sidebar__title">怎么在server 2008上部署管理node环境node环境</a>
-          <a href="#" className="sidebar__title">怎么在server 2008上部署管理node环境node环境</a>
+          {data.filter(datum => datum.replycount === 0).slice(0, 5).map((datum, i) => <a href="#" key={i} className="sidebar__title">{datum.title}</a>)}
         </div>
       </div> {/* 话题回复模块 */}
 

@@ -175,6 +175,20 @@
 	}
 	
 	function TopicListItem(props) {
+	  let tab = '';
+	
+	  if (props.top) {
+	    tab = "置顶";
+	  } else if (props.good) {
+	    tab = "精华";
+	  } else if (props.tabString === "share") {
+	    tab = "分享";
+	  } else if (props.tabString === "ask") {
+	    tab = "问答";
+	  } else if (props.tabString === "job") {
+	    tab = "招聘";
+	  }
+	
 	  return _react2.default.createElement(
 	    "div",
 	    { className: "topic_list__cell" },
@@ -218,7 +232,7 @@
 	      _react2.default.createElement(
 	        "span",
 	        { className: props.tab },
-	        "置顶"
+	        tab
 	      ),
 	      _react2.default.createElement(
 	        "a",
@@ -232,7 +246,7 @@
 	class Content extends _react2.default.Component {
 	  constructor() {
 	    super();
-	    this.state = { loading: true, data: {} };
+	    this.state = { loading: true, data: [] };
 	  }
 	
 	  componentDidMount() {
@@ -269,10 +283,13 @@
 	        let replycount = data.reply_count;
 	        let visitcount = data.visit_count;
 	        let avatar = data.author.avatar_url;
-	        let tab = data.top ? 'topic__put_top' : 'topic__list_tab';
+	        let tab = data.top || data.good ? 'topic__put_top' : 'topic__list_tab';
+	        let top = data.top;
+	        let tabString = data.tab;
 	        let time = this.lastReplyTime(data.last_reply_at);
 	        let id = data.id;
-	        return _react2.default.createElement(TopicListItem, { key: id, title: title, replycount: replycount, visitcount: visitcount, avatar: avatar, time: time, loginname: loginname, tab: tab });
+	        let good = data.good;
+	        return _react2.default.createElement(TopicListItem, { key: id, title: title, replycount: replycount, visitcount: visitcount, avatar: avatar, time: time, loginname: loginname, tab: tab, tabString: tabString, good: good, top: top });
 	      });
 	      return cellViews;
 	    }
@@ -430,7 +447,7 @@
 	          )
 	        ),
 	        " ",
-	        _react2.default.createElement(Sidebar, null)
+	        _react2.default.createElement(Sidebar, { data: this.state.data.map(({ title, reply_count: replycount }) => ({ title, replycount })) })
 	      )
 	    );
 	  }
@@ -442,7 +459,7 @@
 	//   );
 	// }
 	
-	function Sidebar() {
+	function Sidebar({ data }) {
 	  return _react2.default.createElement(
 	    "div",
 	    { className: "col-md-3 sidebar" },
@@ -497,31 +514,11 @@
 	      _react2.default.createElement(
 	        "div",
 	        { className: "sidebar__panel__inner" },
-	        _react2.default.createElement(
+	        data.filter(datum => datum.replycount === 0).slice(0, 5).map((datum, i) => _react2.default.createElement(
 	          "a",
-	          { href: "#", className: "sidebar__title" },
-	          "怎么在server 2008上部署管理node环境node环境"
-	        ),
-	        _react2.default.createElement(
-	          "a",
-	          { href: "#", className: "sidebar__title" },
-	          "怎么在server 2008上部署管理node环境node环境"
-	        ),
-	        _react2.default.createElement(
-	          "a",
-	          { href: "#", className: "sidebar__title" },
-	          "怎么在server 2008上部署管理node环境node环境"
-	        ),
-	        _react2.default.createElement(
-	          "a",
-	          { href: "#", className: "sidebar__title" },
-	          "怎么在server 2008上部署管理node环境node环境"
-	        ),
-	        _react2.default.createElement(
-	          "a",
-	          { href: "#", className: "sidebar__title" },
-	          "怎么在server 2008上部署管理node环境node环境"
-	        )
+	          { href: "#", key: i, className: "sidebar__title" },
+	          datum.title
+	        ))
 	      )
 	    ),
 	    " ",
