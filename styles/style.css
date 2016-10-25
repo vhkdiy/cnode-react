@@ -24,6 +24,10 @@ ol, ul {
     background: #fff;
 }
 
+.content {
+    margin-bottom: 15px;
+}
+
 .content__topic_list {
     background-color: #fff;
     margin-bottom: 13px;
@@ -248,13 +252,14 @@ ol, ul {
 
 .footer {
     background-color: #fff;
-    max-width: 1400px;
-    min-width: 960px;
-    margin: 0 auto;
+    /*max-width: 1400*/
     color: #e2e2e2;
     padding: 20px 0;
     font-size: 13px;
     line-height: 2em;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 
 .footer__links__a, .footer__links__a:link {
@@ -279,4 +284,104 @@ ol, ul {
     color: #999;
     cursor: default;
     background-color: transparent;
+}
+
+/* 新手入门分页 */
+.left_content__header {
+    padding: 10px;
+    background-color: #f6f6f6;
+    border-radius: 3px 3px 0 0;
+}
+
+.breadcrumb {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+.breadcrumb a {
+    color: #80bd01;
+}
+
+.inner_content {
+    padding: 10px 20px;
+    border-top: 1px solid #e5e5e5;
+    border-radius: 0 0 3px 3px;
+    background-color: #fff;
+    line-height: 2em;
+}
+
+.inner__title--first {
+    margin: 0;
+}
+
+.inner_content__title {
+    /*font-size: 26px;*/
+    line-height: 40px;
+    border-bottom: 1px solid #eee;
+    margin-top: 30px 0 15px;
+}
+
+.inner_content__info {
+    font-size: 15px;
+    line-height: 1.7em;
+    overflow: auto;
+    margin: 1em 0;
+}
+
+.inner_content__link {
+    color: #08c;
+}
+
+.about_links {
+    width: 250px;
+    height: 60px;
+}
+
+
+/* 登陆页面 */
+.login_form {
+    margin-top: 40px;
+}
+
+.login__group {
+    margin-bottom: 20px;
+}
+
+.login__group__label {
+    float: left;
+    width: 160px;
+    padding-top: 5px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    line-height: 20px;
+}
+
+.login__group__input {
+    margin-left: 180px;
+    width: 270px;
+    padding: 4px 6px;
+}
+
+.login__form-actions {
+    border-top: none;
+    background-color: #fff;
+    max-height: 40px;
+    padding: 19px 20px 20px 180px;
+    margin-bottom: 50px;
+}
+
+.login__info-span {
+    margin-left: 5px;
+}
+
+.login__forgot_password {
+    margin-left: 1em;
+    color: #778087;
+}
+
+a.login__forgot_password:hover {
+    color: #778087;
 }
