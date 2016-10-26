@@ -1,16 +1,17 @@
 import React from "react";
 import { render } from "react-dom";
 import Header from "./Header";
-import Home from "./Home";
 import Footer from "./Footer";
-// import About from "./About";
+import Content from "./Content";
 // import Login from "./Login";
 
-function App() {
+function App({children}) {
   return (
     <div>
       <Header />
-      <Home />
+      <Content>
+        {children}
+      </Content>
       <Footer />
     </div>
   );

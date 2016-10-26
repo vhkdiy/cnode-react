@@ -1,5 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
+import { Link } from "react-router";
 
 function Header() {
     return (
@@ -19,22 +20,22 @@ function Header() {
             <div className="navbar-right">
               <ul className="nav navbar-nav">
                 <li>
-                  <a href="#">首页</a>
+                  <Link to="/">首页</Link>
                 </li>
                 <li>
-                  <a href="#">新手入门</a>
+                  <Link to="/getstart">新手入门</Link>
                 </li>
                 <li>
                   <a href="#">API</a>
                 </li>
                 <li>
-                  <a href="#">关于</a>
+                  <Link to="/about">关于</Link>
                 </li>
                 <li>
                   <a href="#">注册</a>
                 </li>
                 <li>
-                  <a href="#">登陆</a>
+                  <Link to="/login">登陆</Link>
                 </li>
               </ul>
             </div>

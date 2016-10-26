@@ -1,9 +1,12 @@
 import React from "react";
 import { render } from "react-dom";
 import Sidebar from "./Sidebar";
+import { Links, QRcode, LoginPanel } from "./SidebarBox";
 
 function Getstart() {
   return (
+    <div className="container">
+      <div className="row">
         <div className="col-md-9 content">
           <div className="left_content__header">
             <ul className="breadcrumb">
@@ -37,8 +40,17 @@ function Getstart() {
             <p className="inner_content__info"><a href="https://github.com/pana/node-books" className="inner_content__link">https://github.com/pana/node-books</a></p>
             <h2 className="inner_content__title">Node.js 名人</h2>
             <p className="inner_content__info"><strong>《名人堂》</strong></p>
-            <p className="inner_content__info"><a href="https://github.com/cnodejs/nodeclub/wiki/名人堂" className="inner_content__link">https://github.com/cnodejs/nodeclub/wiki/名人堂</a></p>          </div>
-        </div>
+            <p className="inner_content__info"><a href="https://github.com/cnodejs/nodeclub/wiki/名人堂" className="inner_content__link">https://github.com/cnodejs/nodeclub/wiki/名人堂</a></p>
+          </div> {/* inner_content */}
+        </div> {/* col-md-9 content */}
+
+        <Sidebar>
+          {LoginPanel}
+          {Links}
+          {QRcode}
+        </Sidebar>
+      </div> {/* row */}
+    </div>
   );
 }
 

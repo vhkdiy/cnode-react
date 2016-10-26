@@ -1,5 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
+import Sidebar from "./Sidebar";
+import { Links, QRcode, LoginPanel } from "./SidebarBox";
 
 function About() {
   return (
@@ -28,7 +30,13 @@ function About() {
             </a>
           </div> {/* inner_content */}
 
-        </div>
+        </div> {/* col-md-9 content */}
+
+        <Sidebar>
+          {LoginPanel}
+          {Links}
+          {QRcode}
+        </Sidebar>
       </div>
     </div>
   );
