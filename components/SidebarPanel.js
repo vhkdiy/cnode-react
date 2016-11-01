@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 
 function SidebarPanel({ title, titleLink, isQR, children }) {
   const rankingLink = <a href="#" className="ranking__link">{titleLink}</a>;

@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Getstart from "./components/GetStart";
 import Login from "./components/Login";
+import ContentPage from "./components/ContentPage";
 import { Router, Route, browserHistory, hashHistory, IndexRoute } from 'react-router';
 
 const router = (
@@ -17,6 +18,7 @@ const router = (
       <Route path="/about" component={About} />
       <Route path="/getstart" component={Getstart} />
       <Route path="/login" component={Login} />
+      <Route path="/topic/:id" component={ContentPage}></Route>
     </Route>
   </Router>
 )

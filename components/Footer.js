@@ -1,9 +1,8 @@
 import React from "react";
-import { render } from "react-dom";
 
-function Footer() {
+function Footer({location}) {
   return (
-    <div className="footer">
+    <div className={`footer ${location.pathname === '/login' ? 'footer_fix_bottom' : ''}`}>
       <div className="container">
         <div className="footer__links">
           <a href="#" className="footer__links__a">RSS</a>

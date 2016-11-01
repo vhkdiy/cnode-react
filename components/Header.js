@@ -1,10 +1,9 @@
 import React from "react";
-import { render } from "react-dom";
 import { Link } from "react-router";
 
 function Header() {
     return (
-      <nav className="navbar navbar-inverse">
+      <nav className="navbar navbar-inverse navbar-static-top">
         <div className="container">
           <div className="navbar-header">
             <a href="#">
@@ -24,9 +23,6 @@ function Header() {
                 </li>
                 <li>
                   <Link to="/getstart">新手入门</Link>
-                </li>
-                <li>
-                  <a href="#">API</a>
                 </li>
                 <li>
                   <Link to="/about">关于</Link>

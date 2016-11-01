@@ -10,9 +10,11 @@ class Content extends React.Component {
 
   async componentDidMount() {
     const result = await asyncGetData(`https://cnodejs.org/api/v1/topics`);
+    const topic_content = await Promise.all(result.map(async x => await asyncGetData(`https://cnodejs.org/api/v1/topic/${x.id}`)))
     this.setState({
       loading: false,
       topicList: result,
+      topicContent: topic_content,
     });
   }
 

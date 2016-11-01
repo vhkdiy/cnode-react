@@ -1,5 +1,7 @@
 import React from "react";
 import SidebarPanel from "./SidebarPanel";
+import asyncGetData from "../store";
+import { Link } from "react-router";
 
 const LoginPanel = (
   <div className="sidebar__panel sidebar__panel__login">
@@ -59,4 +61,38 @@ const About = (
   </SidebarPanel>
 )
 
-export { Links, QRcode, Ranking, LoginPanel, About }
+function Author({userdata}) {
+  const { avatar_url, loginname, score, recent_topics } = userdata;
+  return (
+    <SidebarPanel title="作者">
+      <div className="sidebar__user__card">
+        <a href="#" className="sidebar__user__avatar">
+          <img className="sidebar__user__avatar__img" src={avatar_url} alt="" />
+        </a>
+        <span className="sidebar__user__name">
+          <a className="sidebar__user__name--color" href="#">{loginname}</a>
+        </span>
+        <p className="sidebar__user__ranking">积分: {score}</p>
+      </div>
+    </SidebarPanel>
+  );
+}
+
+function OtherTopics({topics, currentid}) {
+  const { recent_topics } = topics;
+  return (
+    <SidebarPanel title="作者其它话题" >
+      {recent_topics.filter(topic => topic.id !== currentid).slice(0, 5).map((tp, i) => <Link to={`/topic/${tp.id}`} key={i} className="sidebar__title">{tp.title}</Link>)}
+    </SidebarPanel>
+  );
+}
+
+function NoReplyTopics({topicList}) {
+  return (
+    <SidebarPanel title="无人回复的话题" >
+      {topicList.filter(topic => topic.reply_count === 0).slice(0, 5).map((tp, i) => <Link to={`/topic/${tp.id}`} key={i} className="sidebar__title">{tp.title}</Link>)}
+    </SidebarPanel>
+  );
+}
+
+export { Links, QRcode, Ranking, LoginPanel, About, Author, OtherTopics, NoReplyTopics }

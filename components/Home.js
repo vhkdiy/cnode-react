@@ -6,9 +6,9 @@ import SidebarPanel from "./SidebarPanel";
 import GetStart from "./GetStart";
 import Login from "./Login";
 import asyncGetData from "../store";
-import { Links, QRcode, Ranking, LoginPanel } from "./SidebarBox";
+import { Links, QRcode, Ranking, LoginPanel, Author, NoReplyTopics } from "./SidebarBox";
 
-function TopicList({ loading, topicList }) {
+function TopicList({ loading, topicList, topicContent }) {
   return (
     <div className="col-md-9">
       <ul className="nav nav-pills content__header">
@@ -24,7 +24,7 @@ function TopicList({ loading, topicList }) {
         {
           loading
             ? null
-            : topicList.map(topic => <TopicListItem key={topic.id} topic={topic} />)
+            : topicList.map(topic => <TopicListItem key={topic.id} topic={topic}/>)
         }
         <div>
           <ul className="pagination">
@@ -43,22 +43,18 @@ function TopicList({ loading, topicList }) {
   )
 }
 
+
 class Home extends React.Component {
   render() {
-    const { loading, topicList } = this.context.topicList;
-    const NoReplyTopics = (
-      <SidebarPanel title="无人回复的话题" >
-        {topicList.filter(topic => topic.reply_count === 0).slice(0, 5).map((tp, i) => <a href="#" key={i} className="sidebar__title">{tp.title}</a>)}
-      </SidebarPanel>
-    )
+    const { loading, topicList, topicContent } = this.context.topicList;
 
     return (
       <div className="container">
         <div className="row">
-          <TopicList loading={loading} topicList={topicList} />
+          <TopicList loading={loading} topicList={topicList} topicContent={topicContent}/>
           <Sidebar>
             {LoginPanel}
-            {NoReplyTopics}
+            <NoReplyTopics topicList={topicList} />
             {Ranking}
             {Links}
             {QRcode}

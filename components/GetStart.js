@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import Sidebar from "./Sidebar";
 import { Links, QRcode, LoginPanel } from "./SidebarBox";
 

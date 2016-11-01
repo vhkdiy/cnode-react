@@ -1,14 +1,14 @@
 import React from "react";
-import { render } from "react-dom";
 import lastReplyTime from "./lastReplyTime";
+import { Link } from "react-router";
 
 function TopicListItem(props) {
-  const { title, good, top, reply_count, author, visit_count, tab, last_reply_at } = props.topic;
+  const { title, good, top, reply_count, author, visit_count, tab, last_reply_at, id } = props.topic;
   const { loginname, avatar_url } = author;
   const time = lastReplyTime(last_reply_at);
   const node = top || good ? 'topic__put_top' : 'topic__list_tab';
   let topicTab = '';
-  
+
   if (top) {
     topicTab = "置顶";
   } else if (good) {
@@ -20,6 +20,7 @@ function TopicListItem(props) {
   } else if (tab === "job") {
     topicTab = "招聘";
   }
+
 
   return (
     <div className="topic_list__cell">
@@ -39,7 +40,7 @@ function TopicListItem(props) {
 
       <div className="topic_title_wrapper">
         <span className={node}>{topicTab}</span>
-        <a className="topic_title" href="#">{title}</a>
+        <Link className="topic_title" href={`/#/topic/${id}`}>{title}</Link>
       </div>
     </div>
   );
