@@ -8,9 +8,7 @@ function App({children, location}) {
   return (
     <div>
       <Header />
-      <Content>
         {children}
-      </Content>
       <Footer location={location} />
     </div>
   );

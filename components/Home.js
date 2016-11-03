@@ -7,6 +7,8 @@ import GetStart from "./GetStart";
 import Login from "./Login";
 import asyncGetData from "../store";
 import { Links, QRcode, Ranking, LoginPanel, Author, NoReplyTopics } from "./SidebarBox";
+import { connect } from "react-redux";
+import { getTopics } from "../api";
 
 function TopicList({ loading, topicList, topicContent }) {
   return (
@@ -45,13 +47,17 @@ function TopicList({ loading, topicList, topicContent }) {
 
 
 class Home extends React.Component {
+  componentDidMount() {
+    this.props.loadTopicForHome()
+  }
+
   render() {
-    const { loading, topicList, topicContent } = this.context.topicList;
+    const { loading, topicList } = this.props;
 
     return (
       <div className="container">
         <div className="row">
-          <TopicList loading={loading} topicList={topicList} topicContent={topicContent}/>
+          <TopicList loading={loading} topicList={topicList} />
           <Sidebar>
             {LoginPanel}
             <NoReplyTopics topicList={topicList} />
@@ -65,8 +71,18 @@ class Home extends React.Component {
   }
 }
 
-Home.contextTypes = {
-  topicList: React.PropTypes.object
-}
-
-export default Home;
+export default connect(state => ({
+  topicList: state.topicList.topics,
+  loading: state.topicList.isLoading,
+}),
+dispatch => ({
+  loadTopicForHome: async () => {
+    const topics = await getTopics();
+    dispatch({
+      type: "LOAD_TOPICS",
+      topics,
+      isLoading: false, 
+    });
+  }
+})
+)(Home);

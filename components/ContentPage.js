@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router";
 import Sidebar from "./Sidebar";
 import { Author, OtherTopics, NoReplyTopics } from "./SidebarBox";
-import asyncGetData from "../store";
+import { getTopic, getUserData } from "../api";
 import lastReplyTime from "./lastReplyTime";
+import { connect } from "react-redux";
 
 function Reply(props) {
   const { author, content, create_at} = props.reply;
@@ -24,33 +25,16 @@ function Reply(props) {
 }
 
 class ContentPage extends React.Component {
-  constructor() {
-    super();
-    this.state = { loading: true, topic: [] };
-  }
-
-  async fetchData() {
-    const topicContent = await asyncGetData(`https://cnodejs.org/api/v1/topic/${this.props.params.id}`);
-    const { loginname } = topicContent.author;
-    const userdata = await asyncGetData(`https://cnodejs.org/api/v1/user/${loginname}`);
-    this.setState({
-      loading: false,
-      topic: topicContent,
-      userdata: userdata,
-    })
-  }
-
   componentDidMount() {
-    this.fetchData();
+    this.props.loadTopicForPage();
   }
 
   componentWillReceiveProps() {
-    this.fetchData();
+    this.props.loadTopicForPage();
   }
 
   render() {
-    const { topicList } = this.context.topicList;
-    const { loading, topic, userdata } = this.state;
+    const { loading, topic, userData, topics } = this.props;
     const { content, author, title, replies, reply_count, top, good, tab, create_at, visit_count } = topic;
     const node = top || good ? 'topic__put_top' : 'topic__list_tab';
     const createtime = lastReplyTime(create_at);
@@ -103,9 +87,9 @@ class ContentPage extends React.Component {
           </div> {/* col-md-9 content */}
 
           <Sidebar>
-            { loading ? null : <Author userdata={userdata} /> }
-            { loading ? null : <OtherTopics topics={userdata} currentid={this.props.params.id} /> }
-            <NoReplyTopics topicList={topicList} />
+            { loading ? null : <Author userdata={userData} /> }
+            { loading ? null : <OtherTopics topics={userData} currentid={this.props.params.id} /> }
+            <NoReplyTopics topicList={topics} />
           </Sidebar>
         </div>
       </div>
@@ -113,8 +97,23 @@ class ContentPage extends React.Component {
   }
 }
 
-ContentPage.contextTypes = {
-  topicList: React.PropTypes.object
-}
-
-export default ContentPage;
+export default connect(state => ({
+  topic: state.topic.topicContent,
+  userData: state.topic.userData,
+  loading: state.topic.isLoading,
+  topics: state.topicList.topics,
+}),
+(dispatch, ownProps) => ({
+  loadTopicForPage: async () => {
+    const topicContent = await getTopic(ownProps.params.id);
+    const { loginname } = topicContent.author;
+    const userData = await getUserData(loginname);
+    dispatch({
+      type: "LOAD_TOPIC",
+      topicContent,
+      userData,
+      isLoading: false,
+    });
+  }
+})
+)(ContentPage);
