@@ -7002,6 +7002,10 @@ h1, h2, h3 {
     border-radius: 3px 3px 0 0;
 }
 
+.content__header__tab {
+    cursor: pointer;
+}
+
 .breadcrumb {
     padding: 0;
     margin: 0;

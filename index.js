@@ -14,17 +14,6 @@ import { Router, Route, browserHistory, hashHistory, IndexRoute } from 'react-ro
 import { getTopics } from "./api";
 import store from "./store";
 
-// async function loadTopicForHome() {
-//   const topics = await getTopics();
-
-//   store.dispatch({
-//     type: "LOAD_TOPICS",
-//     topics: topics,
-//     isLoading: false,
-//   });
-//   // 1. 做异步请求
-//   // 2. 获取数据后 dispatch LOAD_TOPICS 动作
-// }
 
 const router = (
   <Provider store={store}>

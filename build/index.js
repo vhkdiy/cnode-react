@@ -62,7 +62,7 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _Home = __webpack_require__(273);
+	var _Home = __webpack_require__(270);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
@@ -70,11 +70,11 @@
 	
 	var _About2 = _interopRequireDefault(_About);
 	
-	var _GetStart = __webpack_require__(278);
+	var _GetStart = __webpack_require__(275);
 	
 	var _GetStart2 = _interopRequireDefault(_GetStart);
 	
-	var _Login = __webpack_require__(280);
+	var _Login = __webpack_require__(279);
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
@@ -84,25 +84,13 @@
 	
 	var _reactRouter = __webpack_require__(215);
 	
-	var _api = __webpack_require__(283);
+	var _api = __webpack_require__(280);
 	
-	var _store = __webpack_require__(271);
+	var _store = __webpack_require__(277);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	// async function loadTopicForHome() {
-	//   const topics = await getTopics();
-	
-	//   store.dispatch({
-	//     type: "LOAD_TOPICS",
-	//     topics: topics,
-	//     isLoading: false,
-	//   });
-	//   // 1. 做异步请求
-	//   // 2. 获取数据后 dispatch LOAD_TOPICS 动作
-	// }
 	
 	const router = _react2.default.createElement(
 	  _reactRedux.Provider,
@@ -23283,10 +23271,6 @@
 	
 	var _Footer2 = _interopRequireDefault(_Footer);
 	
-	var _Content = __webpack_require__(270);
-	
-	var _Content2 = _interopRequireDefault(_Content);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// import Login from "./Login";
@@ -28358,65 +28342,928 @@
 	
 	var _reactDom = __webpack_require__(45);
 	
-	var _store = __webpack_require__(271);
+	var _TopicListItem = __webpack_require__(271);
+	
+	var _TopicListItem2 = _interopRequireDefault(_TopicListItem);
+	
+	var _Sidebar = __webpack_require__(273);
+	
+	var _Sidebar2 = _interopRequireDefault(_Sidebar);
+	
+	var _SidebarPanel = __webpack_require__(274);
+	
+	var _SidebarPanel2 = _interopRequireDefault(_SidebarPanel);
+	
+	var _GetStart = __webpack_require__(275);
+	
+	var _GetStart2 = _interopRequireDefault(_GetStart);
+	
+	var _Login = __webpack_require__(279);
+	
+	var _Login2 = _interopRequireDefault(_Login);
+	
+	var _store = __webpack_require__(277);
 	
 	var _store2 = _interopRequireDefault(_store);
+	
+	var _SidebarBox = __webpack_require__(276);
+	
+	var _reactRedux = __webpack_require__(183);
+	
+	var _api = __webpack_require__(280);
+	
+	var _reactRouter = __webpack_require__(215);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
 	
-	class Content extends _react2.default.Component {
-	  constructor() {
-	    super();
-	    this.state = { loading: true, topicList: [] };
+	function TopicList({ loading, topicList, topicContent, tab }) {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "col-md-9" },
+	    _react2.default.createElement(
+	      "ul",
+	      { className: "nav nav-pills content__header" },
+	      [{ name: '全部', tab: 'all' }, { name: '精华', tab: 'good' }, { name: '分享', tab: 'share' }, { name: '问答', tab: 'ask' }, { name: '招聘', tab: 'job' }].map((tag, i) => _react2.default.createElement(
+	        "li",
+	        { key: i, className: tag.tab === tab ? 'active' : '' },
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: `?tab=${ tag.tab }` },
+	          tag.name
+	        )
+	      ))
+	    ),
+	    _react2.default.createElement(
+	      "div",
+	      { className: "content__topic_list" },
+	      loading ? null : topicList.map(topic => _react2.default.createElement(_TopicListItem2.default, { key: topic.id, topic: topic })),
+	      _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	          "ul",
+	          { className: "pagination" },
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              "a",
+	              { href: "#" },
+	              "«"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            { className: "active disabled" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "#" },
+	              "1"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              "a",
+	              { href: "#" },
+	              "2"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              "a",
+	              { href: "#" },
+	              "3"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              "a",
+	              { href: "#" },
+	              "4"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              "a",
+	              { href: "#" },
+	              "5"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              "a",
+	              null,
+	              "..."
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "li",
+	            null,
+	            _react2.default.createElement(
+	              "a",
+	              { href: "#" },
+	              "»"
+	            )
+	          )
+	        )
+	      )
+	    )
+	  );
+	}
+	
+	class Home extends _react2.default.Component {
+	  componentWillReceiveProps(props) {
+	    this.props.loadTopicForHome(props.location.query.tab);
 	  }
 	
 	  componentDidMount() {
-	    var _this = this;
-	
-	    return _asyncToGenerator(function* () {
-	      const result = yield (0, _store2.default)(`https://cnodejs.org/api/v1/topics`);
-	      const topic_content = yield Promise.all(result.map((() => {
-	        var _ref = _asyncToGenerator(function* (x) {
-	          return yield (0, _store2.default)(`https://cnodejs.org/api/v1/topic/${ x.id }`);
-	        });
-	
-	        return function (_x) {
-	          return _ref.apply(this, arguments);
-	        };
-	      })()));
-	      _this.setState({
-	        loading: false,
-	        topicList: result,
-	        topicContent: topic_content
-	      });
-	    })();
-	  }
-	
-	  getChildContext() {
-	    return {
-	      topicList: this.state
-	    };
+	    this.props.loadTopicForHome(this.props.location.query.tab);
 	  }
 	
 	  render() {
+	    const { loading, topicList, location } = this.props;
+	
 	    return _react2.default.createElement(
 	      "div",
-	      null,
-	      this.props.children
+	      { className: "container" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "row" },
+	        _react2.default.createElement(TopicList, { tab: location.query.tab || 'all', loading: loading, topicList: topicList }),
+	        _react2.default.createElement(
+	          _Sidebar2.default,
+	          null,
+	          _SidebarBox.LoginPanel,
+	          _react2.default.createElement(_SidebarBox.NoReplyTopics, { topicList: topicList }),
+	          _SidebarBox.Ranking,
+	          _SidebarBox.Links,
+	          _SidebarBox.QRcode
+	        )
+	      )
 	    );
 	  }
 	}
 	
-	Content.childContextTypes = {
-	  topicList: _react2.default.PropTypes.object
-	};
+	exports.default = (0, _reactRedux.connect)(state => ({
+	  topicList: state.topicList.topics,
+	  loading: state.topicList.isLoading
+	}), dispatch => ({
+	  loadTopicForHome: (() => {
+	    var _ref = _asyncToGenerator(function* (id) {
+	      const topics = yield (0, _api.getTopics)(id);
+	      console.log(topics);
+	      dispatch({
+	        type: "LOAD_TOPICS",
+	        topics,
+	        isLoading: false
+	      });
+	    });
 	
-	exports.default = Content;
+	    return function loadTopicForHome(_x) {
+	      return _ref.apply(this, arguments);
+	    };
+	  })()
+	}))(Home);
 
 /***/ },
 /* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(12);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _lastReplyTime = __webpack_require__(272);
+	
+	var _lastReplyTime2 = _interopRequireDefault(_lastReplyTime);
+	
+	var _reactRouter = __webpack_require__(215);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function TopicListItem(props) {
+	  const { title, good, top, reply_count, author, visit_count, tab, last_reply_at, id } = props.topic;
+	  const { loginname, avatar_url } = author;
+	  const time = (0, _lastReplyTime2.default)(last_reply_at);
+	  const node = top || good ? 'topic__put_top' : 'topic__list_tab';
+	  let topicTab = '';
+	
+	  if (top) {
+	    topicTab = "置顶";
+	  } else if (good) {
+	    topicTab = "精华";
+	  } else if (tab === "share") {
+	    topicTab = "分享";
+	  } else if (tab === "ask") {
+	    topicTab = "问答";
+	  } else if (tab === "job") {
+	    topicTab = "招聘";
+	  }
+	
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "topic_list__cell" },
+	    _react2.default.createElement(
+	      "a",
+	      { href: "#", className: "pull-left" },
+	      _react2.default.createElement("img", { className: "user__img", src: avatar_url, title: loginname })
+	    ),
+	    _react2.default.createElement(
+	      "span",
+	      { className: "reply_count pull-left" },
+	      _react2.default.createElement(
+	        "span",
+	        { className: "count_of_replies" },
+	        reply_count
+	      ),
+	      _react2.default.createElement(
+	        "span",
+	        { className: "count_seperator" },
+	        "/"
+	      ),
+	      _react2.default.createElement(
+	        "span",
+	        { className: "count_of_visits" },
+	        visit_count
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "a",
+	      { href: "#", className: "last_time pull-right" },
+	      _react2.default.createElement("img", { className: "user__small_img", src: "http://gravatar.com/avatar/d24fc5b1c6b84dae95dd23ba1c7ebbcb?size=48", alt: "" }),
+	      _react2.default.createElement(
+	        "span",
+	        { className: "last_active_time" },
+	        time
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "div",
+	      { className: "topic_title_wrapper" },
+	      _react2.default.createElement(
+	        "span",
+	        { className: node },
+	        topicTab
+	      ),
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { className: "topic_title", href: `/#/topic/${ id }` },
+	        title
+	      )
+	    )
+	  );
+	}
+	
+	exports.default = TopicListItem;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = lastReplyTime;
+	function lastReplyTime(time) {
+	  let lasttime = new Date(time);
+	  const between = (Date.now() - Number(lasttime)) / 1000;
+	  if (between < 3600) {
+	    return `${ ~~(between / 60) } 分钟前`;
+	  } else if (between < 86400) {
+	    return `${ ~~(between / 3600) } 小时前`;
+	  } else {
+	    return `${ ~~(between / 86400) } 天前`;
+	  }
+	}
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(12);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Sidebar({ children }) {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "col-md-3 sidebar" },
+	    children
+	  );
+	}
+	
+	exports.default = Sidebar;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(12);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function SidebarPanel({ title, titleLink, isQR, children }) {
+	  const rankingLink = _react2.default.createElement(
+	    "a",
+	    { href: "#", className: "ranking__link" },
+	    titleLink
+	  );
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "sidebar__panel" },
+	    title ? _react2.default.createElement(
+	      "div",
+	      { className: "sidebar__panel__header" },
+	      _react2.default.createElement(
+	        "span",
+	        { className: "sidebar__panel__header_span" },
+	        title
+	      ),
+	      titleLink ? rankingLink : null
+	    ) : null,
+	    _react2.default.createElement(
+	      "div",
+	      { className: `sidebar__panel__inner${ isQR ? ' qrcode--center' : '' }` },
+	      children
+	    )
+	  );
+	}
+	
+	exports.default = SidebarPanel;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(12);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Sidebar = __webpack_require__(273);
+	
+	var _Sidebar2 = _interopRequireDefault(_Sidebar);
+	
+	var _SidebarBox = __webpack_require__(276);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Getstart() {
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "container" },
+	    _react2.default.createElement(
+	      "div",
+	      { className: "row" },
+	      _react2.default.createElement(
+	        "div",
+	        { className: "col-md-9 content" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "left_content__header" },
+	          _react2.default.createElement(
+	            "ul",
+	            { className: "breadcrumb" },
+	            _react2.default.createElement(
+	              "li",
+	              null,
+	              _react2.default.createElement(
+	                "a",
+	                { href: "#" },
+	                "主页"
+	              )
+	            ),
+	            _react2.default.createElement(
+	              "li",
+	              { className: "active" },
+	              "Node.js 新手入门"
+	            )
+	          )
+	        ),
+	        " ",
+	        _react2.default.createElement(
+	          "div",
+	          { className: "inner_content" },
+	          _react2.default.createElement(
+	            "h2",
+	            { className: "inner_content__title inner__title--first" },
+	            "Node.js 入门"
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《快速搭建 Node.js 开发环境以及加速 npm》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { className: "inner_content__link", href: "http://fengmk2.com/blog/2014/03/node-env-and-faster-npm.html" },
+	              "http://fengmk2.com/blog/2014/03/node-env-and-faster-npm.html"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《Node.js 包教不包会》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { className: "inner_content__link", href: "https://github.com/alsotang/node-lessons" },
+	              "https://github.com/alsotang/node-lessons"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《ECMAScript 6入门》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "http://es6.ruanyifeng.com/", className: "inner_content__link" },
+	              "http://es6.ruanyifeng.com/"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《七天学会NodeJS》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "https://github.com/nqdeng/7-days-nodejs", className: "inner_content__link" },
+	              "https://github.com/nqdeng/7-days-nodejs"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "h2",
+	            { className: "inner_content__title" },
+	            "Node.js 资源"
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《前端资源教程》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "https://cnodejs.org/topic/56ef3edd532839c33a99d00e", className: "inner_content__link" },
+	              "https://cnodejs.org/topic/56ef3edd532839c33a99d00e"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《国内的 npm 镜像源》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "http://cnpmjs.org/", className: "inner_content__link" },
+	              "http://cnpmjs.org/"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《node weekly》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "http://nodeweekly.com/issues", className: "inner_content__link" },
+	              "http://nodeweekly.com/issues"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《node123-node.js中文资料导航》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "https://github.com/youyudehexie/node123", className: "inner_content__link" },
+	              "https://github.com/youyudehexie/node123"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《A curated list of delightful Node.js packages and resources》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "https://github.com/sindresorhus/awesome-nodejs", className: "inner_content__link" },
+	              "https://github.com/sindresorhus/awesome-nodejs"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《Node.js Books》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "https://github.com/pana/node-books", className: "inner_content__link" },
+	              "https://github.com/pana/node-books"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "h2",
+	            { className: "inner_content__title" },
+	            "Node.js 名人"
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "strong",
+	              null,
+	              "《名人堂》"
+	            )
+	          ),
+	          _react2.default.createElement(
+	            "p",
+	            { className: "inner_content__info" },
+	            _react2.default.createElement(
+	              "a",
+	              { href: "https://github.com/cnodejs/nodeclub/wiki/名人堂", className: "inner_content__link" },
+	              "https://github.com/cnodejs/nodeclub/wiki/名人堂"
+	            )
+	          )
+	        ),
+	        " "
+	      ),
+	      " ",
+	      _react2.default.createElement(
+	        _Sidebar2.default,
+	        null,
+	        _SidebarBox.LoginPanel,
+	        _SidebarBox.Links,
+	        _SidebarBox.QRcode
+	      )
+	    ),
+	    " "
+	  );
+	}
+	
+	exports.default = Getstart;
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.NoReplyTopics = exports.OtherTopics = exports.Author = exports.About = exports.LoginPanel = exports.Ranking = exports.QRcode = exports.Links = undefined;
+	
+	var _react = __webpack_require__(12);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _SidebarPanel = __webpack_require__(274);
+	
+	var _SidebarPanel2 = _interopRequireDefault(_SidebarPanel);
+	
+	var _store = __webpack_require__(277);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _reactRouter = __webpack_require__(215);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	const LoginPanel = _react2.default.createElement(
+	  "div",
+	  { className: "sidebar__panel sidebar__panel__login" },
+	  _react2.default.createElement(
+	    "p",
+	    { className: "sidebar__panel__login_title" },
+	    "CNode：Node.js专业中文社区"
+	  ),
+	  _react2.default.createElement(
+	    "div",
+	    null,
+	    "您可以 ",
+	    _react2.default.createElement(
+	      "a",
+	      { href: "#" },
+	      "登陆 "
+	    ),
+	    "或 ",
+	    _react2.default.createElement(
+	      "a",
+	      { href: "#" },
+	      "注册"
+	    ),
+	    ", 也可以",
+	    _react2.default.createElement(
+	      "a",
+	      { href: "#" },
+	      _react2.default.createElement(
+	        "span",
+	        { className: "sidebar__panel__github_login" },
+	        "通过 GitHub 登录"
+	      )
+	    )
+	  )
+	);
+	
+	const Ranking = _react2.default.createElement(
+	  _SidebarPanel2.default,
+	  { title: "积分榜   ", titleLink: "TOP 100 >>" },
+	  _react2.default.createElement(
+	    "ol",
+	    { className: "inner__ranking__list" },
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      _react2.default.createElement(
+	        "span",
+	        { className: "ranking__score" },
+	        "14855"
+	      ),
+	      _react2.default.createElement(
+	        "a",
+	        { href: "#", className: "ranking__user_name" },
+	        "i5ting"
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      _react2.default.createElement(
+	        "span",
+	        { className: "ranking__score" },
+	        "13595"
+	      ),
+	      _react2.default.createElement(
+	        "a",
+	        { href: "#", className: "ranking__user_name" },
+	        "alsotang"
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      _react2.default.createElement(
+	        "span",
+	        { className: "ranking__score" },
+	        "9285"
+	      ),
+	      _react2.default.createElement(
+	        "a",
+	        { href: "#", className: "ranking__user_name" },
+	        "leapon"
+	      )
+	    )
+	  )
+	);
+	
+	const Links = _react2.default.createElement(
+	  _SidebarPanel2.default,
+	  { title: "友情社区" },
+	  _react2.default.createElement(
+	    "a",
+	    { href: "#" },
+	    _react2.default.createElement("img", { className: "inner__links__img", src: "http://o4j806krb.qnssl.com/public/images/ruby-china-20150529.png", alt: "" })
+	  ),
+	  _react2.default.createElement(
+	    "a",
+	    { href: "#" },
+	    _react2.default.createElement("img", { className: "inner__links__img", src: "http://o4j806krb.qnssl.com/public/images/golangtc-logo.png", alt: "" })
+	  )
+	);
+	
+	const QRcode = _react2.default.createElement(
+	  _SidebarPanel2.default,
+	  { title: "客户端二维码", isQR: true },
+	  _react2.default.createElement("img", { src: "http://dn-cnode.qbox.me/FtG0YVgQ6iginiLpf9W4_ShjiLfU", alt: "", className: "inner__qrcode" }),
+	  _react2.default.createElement("br", null),
+	  _react2.default.createElement(
+	    "a",
+	    { href: "https://github.com/soliury/noder-react-native", target: "_blank", className: "source_address" },
+	    "客户端源码地址"
+	  )
+	);
+	
+	const About = _react2.default.createElement(
+	  _SidebarPanel2.default,
+	  { title: "关于" },
+	  _react2.default.createElement(
+	    "p",
+	    null,
+	    "CNode：Node.js专业中文社区"
+	  ),
+	  _react2.default.createElement(
+	    "p",
+	    null,
+	    "在这里你可以："
+	  ),
+	  _react2.default.createElement(
+	    "ul",
+	    { className: "about__panel" },
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      "向别人提出你遇到的问题"
+	    ),
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      "帮助遇到问题的人"
+	    ),
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      "分享自己的知识"
+	    ),
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      "和其它人一起进步"
+	    )
+	  )
+	);
+	
+	function Author({ userdata }) {
+	  const { avatar_url, loginname, score, recent_topics } = userdata;
+	  return _react2.default.createElement(
+	    _SidebarPanel2.default,
+	    { title: "作者" },
+	    _react2.default.createElement(
+	      "div",
+	      { className: "sidebar__user__card" },
+	      _react2.default.createElement(
+	        "a",
+	        { href: "#", className: "sidebar__user__avatar" },
+	        _react2.default.createElement("img", { className: "sidebar__user__avatar__img", src: avatar_url, alt: "" })
+	      ),
+	      _react2.default.createElement(
+	        "span",
+	        { className: "sidebar__user__name" },
+	        _react2.default.createElement(
+	          "a",
+	          { className: "sidebar__user__name--color", href: "#" },
+	          loginname
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "p",
+	        { className: "sidebar__user__ranking" },
+	        "积分: ",
+	        score
+	      )
+	    )
+	  );
+	}
+	
+	function OtherTopics({ topics, currentid }) {
+	  const { recent_topics } = topics;
+	  return _react2.default.createElement(
+	    _SidebarPanel2.default,
+	    { title: "作者其它话题" },
+	    recent_topics.filter(topic => topic.id !== currentid).slice(0, 5).map((tp, i) => _react2.default.createElement(
+	      _reactRouter.Link,
+	      { to: `/topic/${ tp.id }`, key: i, className: "sidebar__title" },
+	      tp.title
+	    ))
+	  );
+	}
+	
+	function NoReplyTopics({ topicList }) {
+	  return _react2.default.createElement(
+	    _SidebarPanel2.default,
+	    { title: "无人回复的话题" },
+	    topicList.filter(topic => topic.reply_count === 0).slice(0, 5).map((tp, i) => _react2.default.createElement(
+	      _reactRouter.Link,
+	      { to: `/topic/${ tp.id }`, key: i, className: "sidebar__title" },
+	      tp.title
+	    ))
+	  );
+	}
+	
+	exports.Links = Links;
+	exports.QRcode = QRcode;
+	exports.Ranking = Ranking;
+	exports.LoginPanel = LoginPanel;
+	exports.About = About;
+	exports.Author = Author;
+	exports.OtherTopics = OtherTopics;
+	exports.NoReplyTopics = NoReplyTopics;
+
+/***/ },
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28427,7 +29274,7 @@
 	
 	var _redux = __webpack_require__(190);
 	
-	var _seamlessImmutable = __webpack_require__(272);
+	var _seamlessImmutable = __webpack_require__(278);
 	
 	var _seamlessImmutable2 = _interopRequireDefault(_seamlessImmutable);
 	
@@ -28467,7 +29314,7 @@
 	exports.default = store;
 
 /***/ },
-/* 272 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {(function() {
@@ -29141,690 +29988,6 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ },
-/* 273 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(12);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(45);
-	
-	var _TopicListItem = __webpack_require__(274);
-	
-	var _TopicListItem2 = _interopRequireDefault(_TopicListItem);
-	
-	var _Sidebar = __webpack_require__(276);
-	
-	var _Sidebar2 = _interopRequireDefault(_Sidebar);
-	
-	var _SidebarPanel = __webpack_require__(277);
-	
-	var _SidebarPanel2 = _interopRequireDefault(_SidebarPanel);
-	
-	var _GetStart = __webpack_require__(278);
-	
-	var _GetStart2 = _interopRequireDefault(_GetStart);
-	
-	var _Login = __webpack_require__(280);
-	
-	var _Login2 = _interopRequireDefault(_Login);
-	
-	var _store = __webpack_require__(271);
-	
-	var _store2 = _interopRequireDefault(_store);
-	
-	var _SidebarBox = __webpack_require__(279);
-	
-	var _reactRedux = __webpack_require__(183);
-	
-	var _api = __webpack_require__(283);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
-	
-	function TopicList({ loading, topicList, topicContent }) {
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "col-md-9" },
-	    _react2.default.createElement(
-	      "ul",
-	      { className: "nav nav-pills content__header" },
-	      ['全部', '精华', '分享', '问答', '招聘'].map((tag, i) => _react2.default.createElement(
-	        "li",
-	        { key: i, className: i ? '' : 'active' },
-	        _react2.default.createElement(
-	          "a",
-	          { href: "#" },
-	          tag
-	        )
-	      ))
-	    ),
-	    _react2.default.createElement(
-	      "div",
-	      { className: "content__topic_list" },
-	      loading ? null : topicList.map(topic => _react2.default.createElement(_TopicListItem2.default, { key: topic.id, topic: topic })),
-	      _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement(
-	          "ul",
-	          { className: "pagination" },
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "«"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            { className: "active disabled" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "1"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "2"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "3"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "4"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "5"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              null,
-	              "..."
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "»"
-	            )
-	          )
-	        )
-	      )
-	    ),
-	    " "
-	  );
-	}
-	
-	class Home extends _react2.default.Component {
-	  componentDidMount() {
-	    this.props.loadTopicForHome();
-	  }
-	
-	  render() {
-	    const { loading, topicList } = this.props;
-	
-	    return _react2.default.createElement(
-	      "div",
-	      { className: "container" },
-	      _react2.default.createElement(
-	        "div",
-	        { className: "row" },
-	        _react2.default.createElement(TopicList, { loading: loading, topicList: topicList }),
-	        _react2.default.createElement(
-	          _Sidebar2.default,
-	          null,
-	          _SidebarBox.LoginPanel,
-	          _react2.default.createElement(_SidebarBox.NoReplyTopics, { topicList: topicList }),
-	          _SidebarBox.Ranking,
-	          _SidebarBox.Links,
-	          _SidebarBox.QRcode
-	        )
-	      )
-	    );
-	  }
-	}
-	
-	exports.default = (0, _reactRedux.connect)(state => ({
-	  topicList: state.topicList.topics,
-	  loading: state.topicList.isLoading
-	}), dispatch => ({
-	  loadTopicForHome: (() => {
-	    var _ref = _asyncToGenerator(function* () {
-	      const topics = yield (0, _api.getTopics)();
-	      dispatch({
-	        type: "LOAD_TOPICS",
-	        topics,
-	        isLoading: false
-	      });
-	    });
-	
-	    return function loadTopicForHome() {
-	      return _ref.apply(this, arguments);
-	    };
-	  })()
-	}))(Home);
-
-/***/ },
-/* 274 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(12);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _lastReplyTime = __webpack_require__(275);
-	
-	var _lastReplyTime2 = _interopRequireDefault(_lastReplyTime);
-	
-	var _reactRouter = __webpack_require__(215);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function TopicListItem(props) {
-	  const { title, good, top, reply_count, author, visit_count, tab, last_reply_at, id } = props.topic;
-	  const { loginname, avatar_url } = author;
-	  const time = (0, _lastReplyTime2.default)(last_reply_at);
-	  const node = top || good ? 'topic__put_top' : 'topic__list_tab';
-	  let topicTab = '';
-	
-	  if (top) {
-	    topicTab = "置顶";
-	  } else if (good) {
-	    topicTab = "精华";
-	  } else if (tab === "share") {
-	    topicTab = "分享";
-	  } else if (tab === "ask") {
-	    topicTab = "问答";
-	  } else if (tab === "job") {
-	    topicTab = "招聘";
-	  }
-	
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "topic_list__cell" },
-	    _react2.default.createElement(
-	      "a",
-	      { href: "#", className: "pull-left" },
-	      _react2.default.createElement("img", { className: "user__img", src: avatar_url, title: loginname })
-	    ),
-	    _react2.default.createElement(
-	      "span",
-	      { className: "reply_count pull-left" },
-	      _react2.default.createElement(
-	        "span",
-	        { className: "count_of_replies" },
-	        reply_count
-	      ),
-	      _react2.default.createElement(
-	        "span",
-	        { className: "count_seperator" },
-	        "/"
-	      ),
-	      _react2.default.createElement(
-	        "span",
-	        { className: "count_of_visits" },
-	        visit_count
-	      )
-	    ),
-	    _react2.default.createElement(
-	      "a",
-	      { href: "#", className: "last_time pull-right" },
-	      _react2.default.createElement("img", { className: "user__small_img", src: "http://gravatar.com/avatar/d24fc5b1c6b84dae95dd23ba1c7ebbcb?size=48", alt: "" }),
-	      _react2.default.createElement(
-	        "span",
-	        { className: "last_active_time" },
-	        time
-	      )
-	    ),
-	    _react2.default.createElement(
-	      "div",
-	      { className: "topic_title_wrapper" },
-	      _react2.default.createElement(
-	        "span",
-	        { className: node },
-	        topicTab
-	      ),
-	      _react2.default.createElement(
-	        _reactRouter.Link,
-	        { className: "topic_title", href: `/#/topic/${ id }` },
-	        title
-	      )
-	    )
-	  );
-	}
-	
-	exports.default = TopicListItem;
-
-/***/ },
-/* 275 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = lastReplyTime;
-	function lastReplyTime(time) {
-	  let lasttime = new Date(time);
-	  const between = (Date.now() - Number(lasttime)) / 1000;
-	  if (between < 3600) {
-	    return `${ ~~(between / 60) } 分钟前`;
-	  } else if (between < 86400) {
-	    return `${ ~~(between / 3600) } 小时前`;
-	  } else {
-	    return `${ ~~(between / 86400) } 天前`;
-	  }
-	}
-
-/***/ },
-/* 276 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(12);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Sidebar({ children }) {
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "col-md-3 sidebar" },
-	    children
-	  );
-	}
-	
-	exports.default = Sidebar;
-
-/***/ },
-/* 277 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(12);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function SidebarPanel({ title, titleLink, isQR, children }) {
-	  const rankingLink = _react2.default.createElement(
-	    "a",
-	    { href: "#", className: "ranking__link" },
-	    titleLink
-	  );
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "sidebar__panel" },
-	    title ? _react2.default.createElement(
-	      "div",
-	      { className: "sidebar__panel__header" },
-	      _react2.default.createElement(
-	        "span",
-	        { className: "sidebar__panel__header_span" },
-	        title
-	      ),
-	      titleLink ? rankingLink : null
-	    ) : null,
-	    _react2.default.createElement(
-	      "div",
-	      { className: `sidebar__panel__inner${ isQR ? ' qrcode--center' : '' }` },
-	      children
-	    )
-	  );
-	}
-	
-	exports.default = SidebarPanel;
-
-/***/ },
-/* 278 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(12);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Sidebar = __webpack_require__(276);
-	
-	var _Sidebar2 = _interopRequireDefault(_Sidebar);
-	
-	var _SidebarBox = __webpack_require__(279);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Getstart() {
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "container" },
-	    _react2.default.createElement(
-	      "div",
-	      { className: "row" },
-	      _react2.default.createElement(
-	        "div",
-	        { className: "col-md-9 content" },
-	        _react2.default.createElement(
-	          "div",
-	          { className: "left_content__header" },
-	          _react2.default.createElement(
-	            "ul",
-	            { className: "breadcrumb" },
-	            _react2.default.createElement(
-	              "li",
-	              null,
-	              _react2.default.createElement(
-	                "a",
-	                { href: "#" },
-	                "主页"
-	              )
-	            ),
-	            _react2.default.createElement(
-	              "li",
-	              { className: "active" },
-	              "Node.js 新手入门"
-	            )
-	          )
-	        ),
-	        " ",
-	        _react2.default.createElement(
-	          "div",
-	          { className: "inner_content" },
-	          _react2.default.createElement(
-	            "h2",
-	            { className: "inner_content__title inner__title--first" },
-	            "Node.js 入门"
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《快速搭建 Node.js 开发环境以及加速 npm》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { className: "inner_content__link", href: "http://fengmk2.com/blog/2014/03/node-env-and-faster-npm.html" },
-	              "http://fengmk2.com/blog/2014/03/node-env-and-faster-npm.html"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《Node.js 包教不包会》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { className: "inner_content__link", href: "https://github.com/alsotang/node-lessons" },
-	              "https://github.com/alsotang/node-lessons"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《ECMAScript 6入门》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "http://es6.ruanyifeng.com/", className: "inner_content__link" },
-	              "http://es6.ruanyifeng.com/"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《七天学会NodeJS》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "https://github.com/nqdeng/7-days-nodejs", className: "inner_content__link" },
-	              "https://github.com/nqdeng/7-days-nodejs"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "h2",
-	            { className: "inner_content__title" },
-	            "Node.js 资源"
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《前端资源教程》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "https://cnodejs.org/topic/56ef3edd532839c33a99d00e", className: "inner_content__link" },
-	              "https://cnodejs.org/topic/56ef3edd532839c33a99d00e"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《国内的 npm 镜像源》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "http://cnpmjs.org/", className: "inner_content__link" },
-	              "http://cnpmjs.org/"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《node weekly》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "http://nodeweekly.com/issues", className: "inner_content__link" },
-	              "http://nodeweekly.com/issues"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《node123-node.js中文资料导航》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "https://github.com/youyudehexie/node123", className: "inner_content__link" },
-	              "https://github.com/youyudehexie/node123"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《A curated list of delightful Node.js packages and resources》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "https://github.com/sindresorhus/awesome-nodejs", className: "inner_content__link" },
-	              "https://github.com/sindresorhus/awesome-nodejs"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《Node.js Books》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "https://github.com/pana/node-books", className: "inner_content__link" },
-	              "https://github.com/pana/node-books"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "h2",
-	            { className: "inner_content__title" },
-	            "Node.js 名人"
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "strong",
-	              null,
-	              "《名人堂》"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "p",
-	            { className: "inner_content__info" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "https://github.com/cnodejs/nodeclub/wiki/名人堂", className: "inner_content__link" },
-	              "https://github.com/cnodejs/nodeclub/wiki/名人堂"
-	            )
-	          )
-	        ),
-	        " "
-	      ),
-	      " ",
-	      _react2.default.createElement(
-	        _Sidebar2.default,
-	        null,
-	        _SidebarBox.LoginPanel,
-	        _SidebarBox.Links,
-	        _SidebarBox.QRcode
-	      )
-	    ),
-	    " "
-	  );
-	}
-	
-	exports.default = Getstart;
-
-/***/ },
 /* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -29833,262 +29996,16 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.NoReplyTopics = exports.OtherTopics = exports.Author = exports.About = exports.LoginPanel = exports.Ranking = exports.QRcode = exports.Links = undefined;
 	
 	var _react = __webpack_require__(12);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _SidebarPanel = __webpack_require__(277);
-	
-	var _SidebarPanel2 = _interopRequireDefault(_SidebarPanel);
-	
-	var _store = __webpack_require__(271);
-	
-	var _store2 = _interopRequireDefault(_store);
-	
-	var _reactRouter = __webpack_require__(215);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	const LoginPanel = _react2.default.createElement(
-	  "div",
-	  { className: "sidebar__panel sidebar__panel__login" },
-	  _react2.default.createElement(
-	    "p",
-	    { className: "sidebar__panel__login_title" },
-	    "CNode：Node.js专业中文社区"
-	  ),
-	  _react2.default.createElement(
-	    "div",
-	    null,
-	    "您可以 ",
-	    _react2.default.createElement(
-	      "a",
-	      { href: "#" },
-	      "登陆 "
-	    ),
-	    "或 ",
-	    _react2.default.createElement(
-	      "a",
-	      { href: "#" },
-	      "注册"
-	    ),
-	    ", 也可以",
-	    _react2.default.createElement(
-	      "a",
-	      { href: "#" },
-	      _react2.default.createElement(
-	        "span",
-	        { className: "sidebar__panel__github_login" },
-	        "通过 GitHub 登录"
-	      )
-	    )
-	  )
-	);
-	
-	const Ranking = _react2.default.createElement(
-	  _SidebarPanel2.default,
-	  { title: "积分榜   ", titleLink: "TOP 100 >>" },
-	  _react2.default.createElement(
-	    "ol",
-	    { className: "inner__ranking__list" },
-	    _react2.default.createElement(
-	      "li",
-	      null,
-	      _react2.default.createElement(
-	        "span",
-	        { className: "ranking__score" },
-	        "14855"
-	      ),
-	      _react2.default.createElement(
-	        "a",
-	        { href: "#", className: "ranking__user_name" },
-	        "i5ting"
-	      )
-	    ),
-	    _react2.default.createElement(
-	      "li",
-	      null,
-	      _react2.default.createElement(
-	        "span",
-	        { className: "ranking__score" },
-	        "13595"
-	      ),
-	      _react2.default.createElement(
-	        "a",
-	        { href: "#", className: "ranking__user_name" },
-	        "alsotang"
-	      )
-	    ),
-	    _react2.default.createElement(
-	      "li",
-	      null,
-	      _react2.default.createElement(
-	        "span",
-	        { className: "ranking__score" },
-	        "9285"
-	      ),
-	      _react2.default.createElement(
-	        "a",
-	        { href: "#", className: "ranking__user_name" },
-	        "leapon"
-	      )
-	    )
-	  )
-	);
-	
-	const Links = _react2.default.createElement(
-	  _SidebarPanel2.default,
-	  { title: "友情社区" },
-	  _react2.default.createElement(
-	    "a",
-	    { href: "#" },
-	    _react2.default.createElement("img", { className: "inner__links__img", src: "http://o4j806krb.qnssl.com/public/images/ruby-china-20150529.png", alt: "" })
-	  ),
-	  _react2.default.createElement(
-	    "a",
-	    { href: "#" },
-	    _react2.default.createElement("img", { className: "inner__links__img", src: "http://o4j806krb.qnssl.com/public/images/golangtc-logo.png", alt: "" })
-	  )
-	);
-	
-	const QRcode = _react2.default.createElement(
-	  _SidebarPanel2.default,
-	  { title: "客户端二维码", isQR: true },
-	  _react2.default.createElement("img", { src: "http://dn-cnode.qbox.me/FtG0YVgQ6iginiLpf9W4_ShjiLfU", alt: "", className: "inner__qrcode" }),
-	  _react2.default.createElement("br", null),
-	  _react2.default.createElement(
-	    "a",
-	    { href: "https://github.com/soliury/noder-react-native", target: "_blank", className: "source_address" },
-	    "客户端源码地址"
-	  )
-	);
-	
-	const About = _react2.default.createElement(
-	  _SidebarPanel2.default,
-	  { title: "关于" },
-	  _react2.default.createElement(
-	    "p",
-	    null,
-	    "CNode：Node.js专业中文社区"
-	  ),
-	  _react2.default.createElement(
-	    "p",
-	    null,
-	    "在这里你可以："
-	  ),
-	  _react2.default.createElement(
-	    "ul",
-	    { className: "about__panel" },
-	    _react2.default.createElement(
-	      "li",
-	      null,
-	      "向别人提出你遇到的问题"
-	    ),
-	    _react2.default.createElement(
-	      "li",
-	      null,
-	      "帮助遇到问题的人"
-	    ),
-	    _react2.default.createElement(
-	      "li",
-	      null,
-	      "分享自己的知识"
-	    ),
-	    _react2.default.createElement(
-	      "li",
-	      null,
-	      "和其它人一起进步"
-	    )
-	  )
-	);
-	
-	function Author({ userdata }) {
-	  const { avatar_url, loginname, score, recent_topics } = userdata;
-	  return _react2.default.createElement(
-	    _SidebarPanel2.default,
-	    { title: "作者" },
-	    _react2.default.createElement(
-	      "div",
-	      { className: "sidebar__user__card" },
-	      _react2.default.createElement(
-	        "a",
-	        { href: "#", className: "sidebar__user__avatar" },
-	        _react2.default.createElement("img", { className: "sidebar__user__avatar__img", src: avatar_url, alt: "" })
-	      ),
-	      _react2.default.createElement(
-	        "span",
-	        { className: "sidebar__user__name" },
-	        _react2.default.createElement(
-	          "a",
-	          { className: "sidebar__user__name--color", href: "#" },
-	          loginname
-	        )
-	      ),
-	      _react2.default.createElement(
-	        "p",
-	        { className: "sidebar__user__ranking" },
-	        "积分: ",
-	        score
-	      )
-	    )
-	  );
-	}
-	
-	function OtherTopics({ topics, currentid }) {
-	  const { recent_topics } = topics;
-	  return _react2.default.createElement(
-	    _SidebarPanel2.default,
-	    { title: "作者其它话题" },
-	    recent_topics.filter(topic => topic.id !== currentid).slice(0, 5).map((tp, i) => _react2.default.createElement(
-	      _reactRouter.Link,
-	      { to: `/topic/${ tp.id }`, key: i, className: "sidebar__title" },
-	      tp.title
-	    ))
-	  );
-	}
-	
-	function NoReplyTopics({ topicList }) {
-	  return _react2.default.createElement(
-	    _SidebarPanel2.default,
-	    { title: "无人回复的话题" },
-	    topicList.filter(topic => topic.reply_count === 0).slice(0, 5).map((tp, i) => _react2.default.createElement(
-	      _reactRouter.Link,
-	      { to: `/topic/${ tp.id }`, key: i, className: "sidebar__title" },
-	      tp.title
-	    ))
-	  );
-	}
-	
-	exports.Links = Links;
-	exports.QRcode = QRcode;
-	exports.Ranking = Ranking;
-	exports.LoginPanel = LoginPanel;
-	exports.About = About;
-	exports.Author = Author;
-	exports.OtherTopics = OtherTopics;
-	exports.NoReplyTopics = NoReplyTopics;
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(12);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Sidebar = __webpack_require__(276);
+	var _Sidebar = __webpack_require__(273);
 	
 	var _Sidebar2 = _interopRequireDefault(_Sidebar);
 	
-	var _SidebarBox = __webpack_require__(279);
+	var _SidebarBox = __webpack_require__(276);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30191,6 +30108,92 @@
 	exports.default = Login;
 
 /***/ },
+/* 280 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	// class APIClient {
+	//   constructor(key) {
+	//     this.key = key;
+	//   }
+	
+	//   getTopics() {
+	//     this.fetch(`https://cnodejs.org/api/v1/topics`)
+	//   }
+	
+	//   fetch(url) {
+	//     const data = await fetch(url,
+	//       headers: {
+	//         "API_KEY": this.key
+	//       }
+	//     );
+	//     const json = await data.json();
+	
+	//     if (json.error) {
+	//       throw new Error(json.error);
+	//     }
+	
+	//     return json.data;
+	//   }
+	// }
+	
+	let get = (() => {
+	  var _ref = _asyncToGenerator(function* (url) {
+	    const data = yield fetch(url);
+	    const json = yield data.json();
+	
+	    if (json.error) {
+	      throw new Error(json.error);
+	    }
+	
+	    return json.data;
+	  });
+	
+	  return function get(_x) {
+	    return _ref.apply(this, arguments);
+	  };
+	})();
+	
+	// API_KEY=...
+	
+	let getTopics = exports.getTopics = (() => {
+	  var _ref2 = _asyncToGenerator(function* (tag) {
+	    return get(`https://cnodejs.org/api/v1/topics${ tag ? `?tab=${ tag }` : '' }`);
+	  });
+	
+	  return function getTopics(_x2) {
+	    return _ref2.apply(this, arguments);
+	  };
+	})();
+	
+	let getTopic = exports.getTopic = (() => {
+	  var _ref3 = _asyncToGenerator(function* (id) {
+	    return get(`https://cnodejs.org/api/v1/topic/${ id }`);
+	  });
+	
+	  return function getTopic(_x3) {
+	    return _ref3.apply(this, arguments);
+	  };
+	})();
+	
+	let getUserData = exports.getUserData = (() => {
+	  var _ref4 = _asyncToGenerator(function* (name) {
+	    return get(`https://cnodejs.org/api/v1/user/${ name }`);
+	  });
+	
+	  return function getUserData(_x4) {
+	    return _ref4.apply(this, arguments);
+	  };
+	})();
+
+	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
+
+/***/ },
 /* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30204,11 +30207,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Sidebar = __webpack_require__(276);
+	var _Sidebar = __webpack_require__(273);
 	
 	var _Sidebar2 = _interopRequireDefault(_Sidebar);
 	
-	var _SidebarBox = __webpack_require__(279);
+	var _SidebarBox = __webpack_require__(276);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30326,15 +30329,15 @@
 	
 	var _reactRouter = __webpack_require__(215);
 	
-	var _Sidebar = __webpack_require__(276);
+	var _Sidebar = __webpack_require__(273);
 	
 	var _Sidebar2 = _interopRequireDefault(_Sidebar);
 	
-	var _SidebarBox = __webpack_require__(279);
+	var _SidebarBox = __webpack_require__(276);
 	
-	var _api = __webpack_require__(283);
+	var _api = __webpack_require__(280);
 	
-	var _lastReplyTime = __webpack_require__(275);
+	var _lastReplyTime = __webpack_require__(272);
 	
 	var _lastReplyTime2 = _interopRequireDefault(_lastReplyTime);
 	
@@ -30513,92 +30516,6 @@
 	    };
 	  })()
 	}))(ContentPage);
-
-/***/ },
-/* 283 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	// class APIClient {
-	//   constructor(key) {
-	//     this.key = key;
-	//   }
-	
-	//   getTopics() {
-	//     this.fetch(`https://cnodejs.org/api/v1/topics`)
-	//   }
-	
-	//   fetch(url) {
-	//     const data = await fetch(url,
-	//       headers: {
-	//         "API_KEY": this.key
-	//       }
-	//     );
-	//     const json = await data.json();
-	
-	//     if (json.error) {
-	//       throw new Error(json.error);
-	//     }
-	
-	//     return json.data;
-	//   }
-	// }
-	
-	let get = (() => {
-	  var _ref = _asyncToGenerator(function* (url) {
-	    const data = yield fetch(url);
-	    const json = yield data.json();
-	
-	    if (json.error) {
-	      throw new Error(json.error);
-	    }
-	
-	    return json.data;
-	  });
-	
-	  return function get(_x) {
-	    return _ref.apply(this, arguments);
-	  };
-	})();
-	
-	// API_KEY=...
-	
-	let getTopics = exports.getTopics = (() => {
-	  var _ref2 = _asyncToGenerator(function* () {
-	    return get(`https://cnodejs.org/api/v1/topics`);
-	  });
-	
-	  return function getTopics() {
-	    return _ref2.apply(this, arguments);
-	  };
-	})();
-	
-	let getTopic = exports.getTopic = (() => {
-	  var _ref3 = _asyncToGenerator(function* (id) {
-	    return get(`https://cnodejs.org/api/v1/topic/${ id }`);
-	  });
-	
-	  return function getTopic(_x2) {
-	    return _ref3.apply(this, arguments);
-	  };
-	})();
-	
-	let getUserData = exports.getUserData = (() => {
-	  var _ref4 = _asyncToGenerator(function* (name) {
-	    return get(`https://cnodejs.org/api/v1/user/${ name }`);
-	  });
-	
-	  return function getUserData(_x3) {
-	    return _ref4.apply(this, arguments);
-	  };
-	})();
-
-	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
 
 /***/ }
 /******/ ]);

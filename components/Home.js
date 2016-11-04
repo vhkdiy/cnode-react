@@ -9,15 +9,16 @@ import asyncGetData from "../store";
 import { Links, QRcode, Ranking, LoginPanel, Author, NoReplyTopics } from "./SidebarBox";
 import { connect } from "react-redux";
 import { getTopics } from "../api";
+import { Link } from "react-router";
 
-function TopicList({ loading, topicList, topicContent }) {
+function TopicList({ loading, topicList, topicContent, tab }) {
   return (
     <div className="col-md-9">
       <ul className="nav nav-pills content__header">
         {
-          ['全部', '精华', '分享', '问答', '招聘'].map((tag, i) => (
-            <li key={i} className={i ? '' : 'active'}>
-              <a href="#">{tag}</a>
+          [{name: '全部', tab: 'all'}, {name: '精华', tab: 'good'}, {name: '分享', tab: 'share'}, {name: '问答', tab: 'ask'}, {name: '招聘', tab: 'job'}].map((tag, i) => (
+            <li key={i} className={(tag.tab === tab) ? 'active' : ''}>
+              <Link to={`?tab=${tag.tab}`}>{tag.name}</Link>
             </li>
           ))
         }
@@ -40,24 +41,28 @@ function TopicList({ loading, topicList, topicContent }) {
             <li><a href="#">&raquo;</a></li>
           </ul>
         </div>
-      </div> {/* content__topic_list */}
+      </div>
     </div>
   )
 }
 
 
 class Home extends React.Component {
+  componentWillReceiveProps(props) {
+    this.props.loadTopicForHome(props.location.query.tab)
+  }
+
   componentDidMount() {
-    this.props.loadTopicForHome()
+    this.props.loadTopicForHome(this.props.location.query.tab)
   }
 
   render() {
-    const { loading, topicList } = this.props;
+    const { loading, topicList, location } = this.props;
 
     return (
       <div className="container">
         <div className="row">
-          <TopicList loading={loading} topicList={topicList} />
+          <TopicList tab={location.query.tab || 'all'} loading={loading} topicList={topicList}/>
           <Sidebar>
             {LoginPanel}
             <NoReplyTopics topicList={topicList} />
@@ -76,8 +81,9 @@ export default connect(state => ({
   loading: state.topicList.isLoading,
 }),
 dispatch => ({
-  loadTopicForHome: async () => {
-    const topics = await getTopics();
+  loadTopicForHome: async (id) => {
+    const topics = await getTopics(id);
+    console.log(topics)
     dispatch({
       type: "LOAD_TOPICS",
       topics,
