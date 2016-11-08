@@ -66,7 +66,7 @@
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _About = __webpack_require__(281);
+	var _About = __webpack_require__(282);
 	
 	var _About2 = _interopRequireDefault(_About);
 	
@@ -78,7 +78,7 @@
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	var _ContentPage = __webpack_require__(282);
+	var _ContentPage = __webpack_require__(283);
 	
 	var _ContentPage2 = _interopRequireDefault(_ContentPage);
 	
@@ -28362,10 +28362,6 @@
 	
 	var _Login2 = _interopRequireDefault(_Login);
 	
-	var _store = __webpack_require__(277);
-	
-	var _store2 = _interopRequireDefault(_store);
-	
 	var _SidebarBox = __webpack_require__(276);
 	
 	var _reactRedux = __webpack_require__(183);
@@ -28374,18 +28370,24 @@
 	
 	var _reactRouter = __webpack_require__(215);
 	
+	var _Paginate = __webpack_require__(281);
+	
+	var _Paginate2 = _interopRequireDefault(_Paginate);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
 	
-	function TopicList({ loading, topicList, topicContent, tab }) {
+	const TAGS = [{ name: '全部', tab: 'all' }, { name: '精华', tab: 'good' }, { name: '分享', tab: 'share' }, { name: '问答', tab: 'ask' }, { name: '招聘', tab: 'job' }];
+	
+	function TopicList({ loading, topicList, topicContent, tab, page }) {
 	  return _react2.default.createElement(
 	    "div",
 	    { className: "col-md-9" },
 	    _react2.default.createElement(
 	      "ul",
 	      { className: "nav nav-pills content__header" },
-	      [{ name: '全部', tab: 'all' }, { name: '精华', tab: 'good' }, { name: '分享', tab: 'share' }, { name: '问答', tab: 'ask' }, { name: '招聘', tab: 'job' }].map((tag, i) => _react2.default.createElement(
+	      TAGS.map((tag, i) => _react2.default.createElement(
 	        "li",
 	        { key: i, className: tag.tab === tab ? 'active' : '' },
 	        _react2.default.createElement(
@@ -28402,82 +28404,7 @@
 	      _react2.default.createElement(
 	        "div",
 	        null,
-	        _react2.default.createElement(
-	          "ul",
-	          { className: "pagination" },
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "«"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            { className: "active disabled" },
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "1"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "2"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "3"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "4"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "5"
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              null,
-	              "..."
-	            )
-	          ),
-	          _react2.default.createElement(
-	            "li",
-	            null,
-	            _react2.default.createElement(
-	              "a",
-	              { href: "#" },
-	              "»"
-	            )
-	          )
-	        )
+	        _react2.default.createElement(_Paginate2.default, { page: page || '1', tab: tab })
 	      )
 	    )
 	  );
@@ -28485,11 +28412,11 @@
 	
 	class Home extends _react2.default.Component {
 	  componentWillReceiveProps(props) {
-	    this.props.loadTopicForHome(props.location.query.tab);
+	    this.props.loadTopicForHome(props.location.query.tab, props.location.query.page);
 	  }
 	
 	  componentDidMount() {
-	    this.props.loadTopicForHome(this.props.location.query.tab);
+	    this.props.loadTopicForHome(this.props.location.query.tab, this.props.location.query.page);
 	  }
 	
 	  render() {
@@ -28501,7 +28428,7 @@
 	      _react2.default.createElement(
 	        "div",
 	        { className: "row" },
-	        _react2.default.createElement(TopicList, { tab: location.query.tab || 'all', loading: loading, topicList: topicList }),
+	        _react2.default.createElement(TopicList, { tab: location.query.tab || 'all', page: location.query.page, loading: loading, topicList: topicList }),
 	        _react2.default.createElement(
 	          _Sidebar2.default,
 	          null,
@@ -28521,9 +28448,8 @@
 	  loading: state.topicList.isLoading
 	}), dispatch => ({
 	  loadTopicForHome: (() => {
-	    var _ref = _asyncToGenerator(function* (id) {
-	      const topics = yield (0, _api.getTopics)(id);
-	      console.log(topics);
+	    var _ref = _asyncToGenerator(function* (id, page) {
+	      const topics = yield (0, _api.getTopics)(id, page);
 	      dispatch({
 	        type: "LOAD_TOPICS",
 	        topics,
@@ -28531,7 +28457,7 @@
 	      });
 	    });
 	
-	    return function loadTopicForHome(_x) {
+	    return function loadTopicForHome(_x, _x2) {
 	      return _ref.apply(this, arguments);
 	    };
 	  })()
@@ -28608,7 +28534,6 @@
 	    _react2.default.createElement(
 	      "a",
 	      { href: "#", className: "last_time pull-right" },
-	      _react2.default.createElement("img", { className: "user__small_img", src: "http://gravatar.com/avatar/d24fc5b1c6b84dae95dd23ba1c7ebbcb?size=48", alt: "" }),
 	      _react2.default.createElement(
 	        "span",
 	        { className: "last_active_time" },
@@ -30162,11 +30087,15 @@
 	// API_KEY=...
 	
 	let getTopics = exports.getTopics = (() => {
-	  var _ref2 = _asyncToGenerator(function* (tag) {
-	    return get(`https://cnodejs.org/api/v1/topics${ tag ? `?tab=${ tag }` : '' }`);
+	  var _ref2 = _asyncToGenerator(function* (tag = '', page = '') {
+	    if (tag || page) {
+	      return get(`https://cnodejs.org/api/v1/topics?tab=${ tag }&page=${ page }`);
+	    } else {
+	      return get(`https://cnodejs.org/api/v1/topics`);
+	    }
 	  });
 	
-	  return function getTopics(_x2) {
+	  return function getTopics(_x2, _x3) {
 	    return _ref2.apply(this, arguments);
 	  };
 	})();
@@ -30176,7 +30105,7 @@
 	    return get(`https://cnodejs.org/api/v1/topic/${ id }`);
 	  });
 	
-	  return function getTopic(_x3) {
+	  return function getTopic(_x4) {
 	    return _ref3.apply(this, arguments);
 	  };
 	})();
@@ -30186,7 +30115,7 @@
 	    return get(`https://cnodejs.org/api/v1/user/${ name }`);
 	  });
 	
-	  return function getUserData(_x4) {
+	  return function getUserData(_x5) {
 	    return _ref4.apply(this, arguments);
 	  };
 	})();
@@ -30195,6 +30124,75 @@
 
 /***/ },
 /* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(12);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(215);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Paginate({ page, tab }) {
+	  let pageNum = 0;
+	  pageNum = page < 4 ? 1 : Number(page) - 2;
+	  let number = n => {
+	    return [n, n + 1, n + 2, n + 3, n + 4];
+	  };
+	
+	  return _react2.default.createElement(
+	    "ul",
+	    { className: "pagination" },
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: `?tab=${ tab }&page=1` },
+	        "«"
+	      )
+	    ),
+	    number(pageNum).map((n, i) => _react2.default.createElement(
+	      "li",
+	      { className: page == n ? 'active disabled' : '', key: i },
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: `?tab=${ tab }&page=${ n }` },
+	        n
+	      )
+	    )),
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      _react2.default.createElement(
+	        "a",
+	        null,
+	        "..."
+	      )
+	    ),
+	    _react2.default.createElement(
+	      "li",
+	      null,
+	      _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: `?tab=${ tab }&page=50` },
+	        "»"
+	      )
+	    )
+	  );
+	}
+	
+	exports.default = Paginate;
+
+/***/ },
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30314,7 +30312,7 @@
 	exports.default = About;
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

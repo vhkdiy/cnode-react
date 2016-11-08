@@ -34,7 +34,6 @@ function TopicListItem(props) {
       </span>
 
       <a href="#" className="last_time pull-right">
-        <img className="user__small_img" src="http://gravatar.com/avatar/d24fc5b1c6b84dae95dd23ba1c7ebbcb?size=48" alt="" />
         <span className="last_active_time">{time}</span>
       </a>
 

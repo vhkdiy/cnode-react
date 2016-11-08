@@ -36,8 +36,12 @@ async function get(url) {
 
 // API_KEY=...
 
-export async function getTopics(tag) {
-  return get(`https://cnodejs.org/api/v1/topics${tag ? `?tab=${tag}` : ''}`);
+export async function getTopics(tag = '', page = '') {
+  if (tag || page) {
+    return get(`https://cnodejs.org/api/v1/topics?tab=${tag}&page=${page}`)
+  } else {
+    return get(`https://cnodejs.org/api/v1/topics`)
+  }
 }
 
 export async function getTopic(id) {

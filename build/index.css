@@ -6813,6 +6813,15 @@ h1, h2, h3 {
     text-overflow: ellipsis;
 }
 
+@media (max-width: 979px) {
+    .topic_title {max-width: 60%; font-size: 1em;}
+    .sidebar {display: none;}
+}
+
+@media (max-width: 670px) {
+    .topic_title {max-width: 40%;}
+}
+
 .topic_title:visited {
     color: #888;
 }
@@ -6899,7 +6908,7 @@ h1, h2, h3 {
 
 .sidebar__title {
     color: #778087;
-    min-width: 250px;
+    /*min-width: 250px;*/
     font-size: 14px;
     white-space: nowrap;
     line-height: 30px;

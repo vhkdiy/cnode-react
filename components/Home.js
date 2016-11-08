@@ -5,18 +5,20 @@ import Sidebar from "./Sidebar";
 import SidebarPanel from "./SidebarPanel";
 import GetStart from "./GetStart";
 import Login from "./Login";
-import asyncGetData from "../store";
 import { Links, QRcode, Ranking, LoginPanel, Author, NoReplyTopics } from "./SidebarBox";
 import { connect } from "react-redux";
 import { getTopics } from "../api";
 import { Link } from "react-router";
+import Paginate from "./Paginate";
 
-function TopicList({ loading, topicList, topicContent, tab }) {
+const TAGS = [{name: '全部', tab: 'all'}, {name: '精华', tab: 'good'}, {name: '分享', tab: 'share'}, {name: '问答', tab: 'ask'}, {name: '招聘', tab: 'job'}];
+
+function TopicList({ loading, topicList, topicContent, tab, page }) {
   return (
     <div className="col-md-9">
       <ul className="nav nav-pills content__header">
         {
-          [{name: '全部', tab: 'all'}, {name: '精华', tab: 'good'}, {name: '分享', tab: 'share'}, {name: '问答', tab: 'ask'}, {name: '招聘', tab: 'job'}].map((tag, i) => (
+          TAGS.map((tag, i) => (
             <li key={i} className={(tag.tab === tab) ? 'active' : ''}>
               <Link to={`?tab=${tag.tab}`}>{tag.name}</Link>
             </li>
@@ -30,16 +32,7 @@ function TopicList({ loading, topicList, topicContent, tab }) {
             : topicList.map(topic => <TopicListItem key={topic.id} topic={topic}/>)
         }
         <div>
-          <ul className="pagination">
-            <li><a href="#">&laquo;</a></li>
-            <li className="active disabled"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a>...</a></li>
-            <li><a href="#">&raquo;</a></li>
-          </ul>
+         <Paginate page={page || '1'} tab={tab}/>
         </div>
       </div>
     </div>
@@ -49,11 +42,11 @@ function TopicList({ loading, topicList, topicContent, tab }) {
 
 class Home extends React.Component {
   componentWillReceiveProps(props) {
-    this.props.loadTopicForHome(props.location.query.tab)
+    this.props.loadTopicForHome(props.location.query.tab, props.location.query.page)
   }
 
   componentDidMount() {
-    this.props.loadTopicForHome(this.props.location.query.tab)
+    this.props.loadTopicForHome(this.props.location.query.tab, this.props.location.query.page)
   }
 
   render() {
@@ -62,7 +55,7 @@ class Home extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <TopicList tab={location.query.tab || 'all'} loading={loading} topicList={topicList}/>
+          <TopicList tab={location.query.tab || 'all'} page={location.query.page} loading={loading} topicList={topicList}/>
           <Sidebar>
             {LoginPanel}
             <NoReplyTopics topicList={topicList} />
@@ -81,9 +74,8 @@ export default connect(state => ({
   loading: state.topicList.isLoading,
 }),
 dispatch => ({
-  loadTopicForHome: async (id) => {
-    const topics = await getTopics(id);
-    console.log(topics)
+  loadTopicForHome: async (id, page) => {
+    const topics = await getTopics(id, page);
     dispatch({
       type: "LOAD_TOPICS",
       topics,
