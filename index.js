@@ -11,7 +11,7 @@ import Getstart from "./components/GetStart";
 import Login from "./components/Login";
 import ContentPage from "./components/ContentPage";
 import { Router, Route, browserHistory, hashHistory, IndexRoute } from 'react-router';
-import { getTopics } from "./api";
+// import { getTopics } from "./api";
 import store from "./store";
 
 

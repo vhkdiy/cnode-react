@@ -11,16 +11,16 @@ function Reply(props) {
   const { avatar_url, loginname } = author;
   const replytime = lastReplyTime(create_at);
   return (
-     <div className="reply__wrapper">
-        <a href="#" className="reply__user_avatar">
-          <img className="reply__user_avatar__img" src={avatar_url} alt="" />
-        </a>
-        <div className="reply__user_info">
-          <a href="#" className="reply__user_info__name">{loginname} </a>
-          <a href="#" className="reply__user_info__time">{replytime}</a>
-        </div>
-        <div className="reply__content" dangerouslySetInnerHTML={{__html: content}}/>
-     </div> 
+    <div className="reply__wrapper">
+      <a href="#" className="reply__user_avatar">
+        <img className="reply__user_avatar__img" src={avatar_url} alt="" />
+      </a>
+      <div className="reply__user_info">
+        <a href="#" className="reply__user_info__name">{loginname} </a>
+        <a href="#" className="reply__user_info__time">{replytime}</a>
+      </div>
+      <div className="reply__content" dangerouslySetInnerHTML={{ __html: content }} />
+    </div>
   );
 }
 
@@ -67,8 +67,11 @@ class ContentPage extends React.Component {
               </h1>
               <div className="topic_content__changes">
                 <span className="changes__span--before">发布于 {createtime}</span>
-                <span className="changes__span--before">作者 <Link to={`/user/${loading ? null : author.loginname}`}>{loading ? null : author.loginname}</Link></span>
-                <span className="changes__span--before">{visit_count} 次浏览</span>
+                <span className="changes__span--before">作者
+                <Link to={`/user/${loading ? null : author.loginname}`}>
+                {loading ? null : author.loginname}</Link>
+                </span>
+                <span className="changes__span--before">{visit_count}次浏览</span>
                 <span className="changes__span--before">来自 分享</span>
               </div>
             </div> {/* topic_content__header */}
@@ -87,8 +90,8 @@ class ContentPage extends React.Component {
           </div> {/* col-md-9 content */}
 
           <Sidebar>
-            { loading ? null : <Author userdata={userData} /> }
-            { loading ? null : <OtherTopics topics={userData} currentid={this.props.params.id} /> }
+            {loading ? null : <Author userdata={userData} />}
+            {loading ? null : <OtherTopics topics={userData} currentid={this.props.params.id} />}
             <NoReplyTopics topicList={topics} />
           </Sidebar>
         </div>
@@ -103,17 +106,17 @@ export default connect(state => ({
   loading: state.topic.isLoading,
   topics: state.topicList.topics,
 }),
-(dispatch, ownProps) => ({
-  loadTopicForPage: async () => {
-    const topicContent = await getTopic(ownProps.params.id);
-    const { loginname } = topicContent.author;
-    const userData = await getUserData(loginname);
-    dispatch({
-      type: "LOAD_TOPIC",
-      topicContent,
-      userData,
-      isLoading: false,
-    });
-  }
-})
+  (dispatch, ownProps) => ({
+    loadTopicForPage: async () => {
+      const topicContent = await getTopic(ownProps.params.id);
+      const { loginname } = topicContent.author;
+      const userData = await getUserData(loginname);
+      dispatch({
+        type: "LOAD_TOPIC",
+        topicContent,
+        userData,
+        isLoading: false,
+      });
+    }
+  })
 )(ContentPage);

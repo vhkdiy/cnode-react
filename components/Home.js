@@ -13,7 +13,7 @@ import Paginate from "./Paginate";
 
 const TAGS = [{name: '全部', tab: 'all'}, {name: '精华', tab: 'good'}, {name: '分享', tab: 'share'}, {name: '问答', tab: 'ask'}, {name: '招聘', tab: 'job'}];
 
-function TopicList({ loading, topicList, topicContent, tab, page }) {
+function TopicList({ loading, topicList, tab, page }) {
   return (
     <div className="col-md-9">
       <ul className="nav nav-pills content__header">
@@ -28,7 +28,7 @@ function TopicList({ loading, topicList, topicContent, tab, page }) {
       <div className="content__topic_list">
         {
           loading
-            ? null
+            ? 'loading...'
             : topicList.map(topic => <TopicListItem key={topic.id} topic={topic}/>)
         }
         <div>

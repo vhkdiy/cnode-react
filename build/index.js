@@ -84,8 +84,6 @@
 	
 	var _reactRouter = __webpack_require__(215);
 	
-	var _api = __webpack_require__(280);
-	
 	var _store = __webpack_require__(277);
 	
 	var _store2 = _interopRequireDefault(_store);
@@ -109,6 +107,8 @@
 	    )
 	  )
 	);
+	// import { getTopics } from "./api";
+	
 	
 	(0, _reactDom.render)(router, document.querySelector("#root"));
 
@@ -28380,7 +28380,7 @@
 	
 	const TAGS = [{ name: '全部', tab: 'all' }, { name: '精华', tab: 'good' }, { name: '分享', tab: 'share' }, { name: '问答', tab: 'ask' }, { name: '招聘', tab: 'job' }];
 	
-	function TopicList({ loading, topicList, topicContent, tab, page }) {
+	function TopicList({ loading, topicList, tab, page }) {
 	  return _react2.default.createElement(
 	    "div",
 	    { className: "col-md-9" },
@@ -28400,7 +28400,7 @@
 	    _react2.default.createElement(
 	      "div",
 	      { className: "content__topic_list" },
-	      loading ? null : topicList.map(topic => _react2.default.createElement(_TopicListItem2.default, { key: topic.id, topic: topic })),
+	      loading ? 'loading...' : topicList.map(topic => _react2.default.createElement(_TopicListItem2.default, { key: topic.id, topic: topic })),
 	      _react2.default.createElement(
 	        "div",
 	        null,
@@ -30142,8 +30142,8 @@
 	
 	function Paginate({ page, tab }) {
 	  let pageNum = 0;
-	  pageNum = page < 4 ? 1 : Number(page) - 2;
-	  let number = n => {
+	  pageNum = page < 4 ? 1 : parseInt(page) - 2;
+	  let renderPagination = n => {
 	    return [n, n + 1, n + 2, n + 3, n + 4];
 	  };
 	
@@ -30159,7 +30159,7 @@
 	        "«"
 	      )
 	    ),
-	    number(pageNum).map((n, i) => _react2.default.createElement(
+	    renderPagination(pageNum).map((n, i) => _react2.default.createElement(
 	      "li",
 	      { className: page == n ? 'active disabled' : '', key: i },
 	      _react2.default.createElement(
@@ -30442,7 +30442,7 @@
 	              _react2.default.createElement(
 	                "span",
 	                { className: "changes__span--before" },
-	                "作者 ",
+	                "作者",
 	                _react2.default.createElement(
 	                  _reactRouter.Link,
 	                  { to: `/user/${ loading ? null : author.loginname }` },
@@ -30453,7 +30453,7 @@
 	                "span",
 	                { className: "changes__span--before" },
 	                visit_count,
-	                " 次浏览"
+	                "次浏览"
 	              ),
 	              _react2.default.createElement(
 	                "span",
