@@ -1,38 +1,45 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router";
 
-function Header() {
+class Header extends Component {
+  constructor() {
+   super();
+   this.state = { clicked: false };
+   this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState({ clicked: !this.state.clicked })
+  }
+
+  render() {
+    let navbar = this.state.clicked ? 'navbar-collapse' : 'collapse navbar-collapse';
+    const NAVBAR_ITEM = [{name: '首页', path: '/'}, {name: '新手入门', path: '/getstart'}, {name: '关于', path: '/about'}, {name: '注册', path: '#'}, {name: '登陆', path: '/login'}];
     return (
       <nav className="navbar navbar-inverse navbar-static-top">
         <div className="container">
           <div className="navbar-header">
-            <a href="#">
+            <button type="button" className="navbar-toggle collapsed" onClick={this.handleClick} >
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+            <Link to="/">
               <img className="navbar-brand" src="http://o4j806krb.qnssl.com/public/images/cnodejs_light.svg" alt="" />
-            </a>
+            </Link>
           </div>
 
-          <div className="collapse navbar-collapse" id="responsive-navbar">
+          <div className={navbar} id="responsive-navbar">
             <form action="" className="navbar-form navbar-left">
               <input type="text" placeholder="search" className="form-control navbar-search" />
             </form>
 
             <div className="navbar-right">
               <ul className="nav navbar-nav">
-                <li>
-                  <Link to="/">首页</Link>
-                </li>
-                <li>
-                  <Link to="/getstart">新手入门</Link>
-                </li>
-                <li>
-                  <Link to="/about">关于</Link>
-                </li>
-                <li>
-                  <a href="#">注册</a>
-                </li>
-                <li>
-                  <Link to="/login">登陆</Link>
-                </li>
+                {
+                  NAVBAR_ITEM.map((item, i) => <li key={i}><Link to={item.path} onClick={this.handleClick}>{item.name}</Link></li>)
+                }
               </ul>
             </div>
 
@@ -41,6 +48,7 @@ function Header() {
         </div>
       </nav>
     );
+  }
 }
 
 export default Header;
