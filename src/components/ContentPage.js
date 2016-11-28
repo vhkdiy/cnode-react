@@ -29,8 +29,10 @@ class ContentPage extends React.Component {
     this.props.loadTopicForPage();
   }
 
-  componentWillReceiveProps() {
-    this.props.loadTopicForPage();
+  componentWillReceiveProps(props) {
+    if(props.params.id !== this.props.params.id) {
+      this.props.loadTopicForPage();
+    }
   }
 
   render() {

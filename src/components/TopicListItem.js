@@ -39,7 +39,7 @@ function TopicListItem(props) {
 
       <div className="topic_title_wrapper">
         <span className={node}>{topicTab}</span>
-        <Link className="topic_title" href={`/#/topic/${id}`}>{title}</Link>
+        <Link className="topic_title" to={`/topic/${id}`}>{title}</Link>
       </div>
     </div>
   );

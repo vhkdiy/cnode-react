@@ -3,8 +3,6 @@ import { render } from "react-dom";
 import TopicListItem from "./TopicListItem";
 import Sidebar from "./Sidebar";
 import SidebarPanel from "./SidebarPanel";
-import GetStart from "./GetStart";
-import Login from "./Login";
 import { Links, QRcode, Ranking, LoginPanel, Author, NoReplyTopics } from "./SidebarBox";
 import { connect } from "react-redux";
 import { getTopics } from "../api";
@@ -39,10 +37,11 @@ function TopicList({ loading, topicList, tab, page }) {
   )
 }
 
-
 class Home extends React.Component {
   componentWillReceiveProps(props) {
-    this.props.loadTopicForHome(props.location.query.tab, props.location.query.page)
+    if (props.location.query.tab !== this.props.location.query.tab) {
+      this.props.loadTopicForHome(props.location.query.tab, props.location.query.page)
+    }
   }
 
   componentDidMount() {
